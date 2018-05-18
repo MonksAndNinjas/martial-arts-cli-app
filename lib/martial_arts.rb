@@ -1,5 +1,2 @@
-require "martial_arts/version"
-
-module MartialArts
-  # Your code goes here...
-end
+require_relative "./martial_arts/version"
+require_relative "./martial_arts/cli"
