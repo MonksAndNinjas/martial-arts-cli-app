@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
+require './lib/martial_arts'
+
 MartialArts::CLI.new.call
