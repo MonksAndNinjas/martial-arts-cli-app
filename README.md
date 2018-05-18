@@ -2,7 +2,7 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/martial_arts`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
+TODO: This Ruby Gem provides a CLI to view the world's most popular martial arts taken from a Google search and Wikipedia.
 
 ## Installation
 
