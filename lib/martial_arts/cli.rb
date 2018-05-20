@@ -18,7 +18,6 @@ class MartialArts::CLI
       puts "2. Martail Arts by Country"
       puts "3. Martial Art Styles"
       puts "4. Martial Art by Fighting-Focus"
-      puts "exit"
       puts "Please enter the corresponding number or type exit"
       #gets user input
       input = gets.strip.downcase
