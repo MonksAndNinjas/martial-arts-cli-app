@@ -9,8 +9,12 @@ class MartialArts::CLI
     menu
     #gets input from user
     input = gets.chomp.to_i
-    #checks for appropriate input then returns request
+
     return_request(input)
+    until input < 6 and input > 0
+      return_request(gets.chomp.to_i)
+    end
+    #double check until loop when have created methods for menu options
   end
 
   def menu
@@ -23,20 +27,20 @@ class MartialArts::CLI
   end
 
   def return_request(input)
-      if input == 1
-        popular_martial_arts
-      elsif input == 2
-        martial_art_by_country
-      elsif input == 3
-        martial_art_styles
-      elsif input == 4
-        martial_art_by_focus
-      elsif input == 5
-        quit
-      end
-        puts "invalid entry"
+    if input == 1
+      popular_martial_arts
+    elsif input == 2
+      martial_art_by_country
+    elsif input == 3
+      martial_art_styles
+    elsif input == 4
+      martial_art_by_focus
+    elsif input == 5
+      quit
+    else
+      puts "invalid entry"
     end
-
   end
+
 
 end
