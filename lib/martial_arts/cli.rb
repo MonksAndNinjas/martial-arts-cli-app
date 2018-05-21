@@ -85,8 +85,6 @@ class MartialArts::CLI
       puts "#{i}. #{country_instance}" #When setup change to country_instance.name
     end
 
-
-
     puts "Choose one of us to see martial arts native to our country"
     puts "Enter the corresponding number for more information about the style"
     puts "Otherwise type back or countries"
