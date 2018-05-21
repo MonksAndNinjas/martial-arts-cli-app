@@ -44,6 +44,21 @@ class MartialArts::CLI
     MartialArts::Styles.todays_list.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance}"
     end
+
+    puts  "Type the corresponding number for more information on the style of martial art."
+    puts  "Otherwise, type back"
+
+    input = nil
+    while input != "back"
+      input = gets.strip.downcase
+
+      case input
+      when "back"
+        nil           #don't want user to have to type exit multiple times to exit app, thus nil and not method.
+      else
+        puts "I'm confused, can you try that again"
+      end
+    end
   end
 
 end
