@@ -1,3 +1,5 @@
+require 'pry'
+
 # Our CLI Controler
 class MartialArts::CLI
 
@@ -50,9 +52,18 @@ class MartialArts::CLI
 
     input = nil
     while input != "back"
+      styles = MartialArts::Styles.todays_list
       input = gets.strip.downcase
 
       case input
+      when "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
+        style = styles[input.to_i - 1]
+
+        puts "style.name"
+        puts "style.country"
+        puts "style.fighting_focus"
+        puts "style.description"
+
       when "back"
         nil           #don't want user to have to type exit multiple times to exit app, thus nil and not method.
       else
