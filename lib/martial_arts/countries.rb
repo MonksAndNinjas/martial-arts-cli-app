@@ -1,5 +1,5 @@
 
-class MartialArts::countries
+class MartialArts::Countries
   @@all
 
   def self.all
