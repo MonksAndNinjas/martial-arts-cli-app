@@ -83,6 +83,10 @@ class MartialArts::CLI
     #puts a list of countries without repetitions
     #learn more information about the styles.
     #user can then go back
+    puts "I'm a list of countries"
+    puts "Choose one of us to see martial arts native to our country"
+    puts "Enter the corresponding number for more information about the style"
+    puts "Otherwise type back or countries"
   end
 
 end
