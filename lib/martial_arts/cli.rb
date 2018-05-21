@@ -43,7 +43,7 @@ class MartialArts::CLI
 
   def list
     MartialArts::Styles.todays_list.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance}"
+      puts "#{i}. #{style_instance}" #when setup change to style_instance.name
     end
 
     puts  "Enter the corresponding number for more information on the style of martial art."
@@ -81,9 +81,12 @@ class MartialArts::CLI
   def martial_arts_by_country
     #goes into the Country class to retrieve array of all countries
     #puts a list of countries without repetitions
-    #learn more information about the styles.
-    #user can then go back
-    puts "I'm a list of countries"
+    MartialArts::Countries.all.each.with_index(1) do |country_instance, i|
+      puts "#{i}. #{country_instance}" #When setup change to country_instance.name
+    end
+
+
+
     puts "Choose one of us to see martial arts native to our country"
     puts "Enter the corresponding number for more information about the style"
     puts "Otherwise type back or countries"
