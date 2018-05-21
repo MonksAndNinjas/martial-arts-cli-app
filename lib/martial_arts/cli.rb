@@ -41,15 +41,6 @@ class MartialArts::CLI
     end
   end
 
-  def list
-    MartialArts::Styles.todays_list.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance}" #when setup change to style_instance.name
-    end
-
-    puts  "Enter the corresponding number for more information on the style of martial art."
-    puts  "Otherwise, type back"
-  end
-
   def popular_martial_arts
     #this outputs the 10 most popular martial arts in the world.
     list
@@ -78,27 +69,26 @@ class MartialArts::CLI
     end
   end
 
-  def country_list
-    #goes into the Country class to retrieve array of all countries
-    MartialArts::Countries.all.each.with_index(1) do |country_instance, i|
-      puts "#{i}. #{country_instance}" #When setup change to country_instance.name
-    end                                #check at some point for uniqueness
-
-    puts "Enter the corresponding number to see all martial arts from that country"
-    puts "Otherwise, type back or list"
-  end
-
   def martial_arts_by_country
     country_list
+    size = MartialArts::Countries.all.size
     input = nil
 
     while input != "back"
       input = gets.strip.downcase
 
       case input
-      when input.to_i < MartialArts::Countries.all.size, input.to_i > 0
-        country_instance.country_styles.each.with_index(1) do |style_instance, i|
-          puts "#{i}. #{style_instance}" #When setup change to style_instance.name
+      when /\d\d*/ #Checks if string is a number
+        if input.to_i < size and input.to_i > 0 #makes sure number is within range.
+          styles_by_country = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
+          #move this to country class when ready
+          styles_by_country.each.with_index(1) do |style_instance, i|
+            puts "#{i}. #{style_instance}" #When setup change to style_instance.name
+          end
+          puts "Enter the corresponding number for more information about the style"
+          puts "Otherwise type back or countries"
+        else
+          puts "I'm confused, can you try that again?"
         end
       when "list"
         country_list
@@ -108,9 +98,25 @@ class MartialArts::CLI
         puts "I'm confused, can you try that again?"
       end
     end
+  end
 
-    puts "Enter the corresponding number for more information about the style"
-    puts "Otherwise type back or countries"
+  def list
+    MartialArts::Styles.todays_list.each.with_index(1) do |style_instance, i|
+      puts "#{i}. #{style_instance}" #when setup change to style_instance.name
+    end
+
+    puts  "Enter the corresponding number for more information on the style of martial art."
+    puts  "Otherwise, type back"
+  end
+
+  def country_list
+    #goes into the Country class to retrieve array of all countries
+    MartialArts::Countries.all.each.with_index(1) do |country_instance, i|
+      puts "#{i}. #{country_instance}" #When setup change to country_instance.name
+    end                                #check at some point for uniqueness
+
+    puts "Enter the corresponding number to see all martial arts from that country"
+    puts "Otherwise, type back or list"
   end
 
 end
