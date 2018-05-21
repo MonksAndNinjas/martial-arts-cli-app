@@ -28,7 +28,7 @@ class MartialArts::CLI
       when "1"
         popular_martial_arts
       when "2"
-        puts "Select amongst the listed countries method"
+        martial_arts_by_country
       when "3"
         puts "List of all styles available method"
       when "4"
@@ -49,15 +49,14 @@ class MartialArts::CLI
 
     puts  "Type the corresponding number for more information on the style of martial art."
     puts  "Otherwise, type back"
-
+    #can't exit program when user is in this method so won't give exit as an option for now
     input = nil
     while input != "back"
-      styles = MartialArts::Styles.todays_list
       input = gets.strip.downcase
 
       case input
       when "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
-        style = styles[input.to_i - 1]
+        style = MartialArts::Styles.todays_list[input.to_i - 1]
 
         puts "style.name"
         puts "style.country"
@@ -65,11 +64,18 @@ class MartialArts::CLI
         puts "style.description"
 
       when "back"
-        nil           #don't want user to have to type exit multiple times to exit app, thus nil and not method.
+        break    #don't want user to have to type exit multiple times to exit app, thus nil and not method.
       else
         puts "I'm confused, can you try that again"
       end
     end
+  end
+
+  def martial_arts_by_country
+    #goes into the Country class to retrieve array of all countries
+    #puts a list of countries without repetitions
+    #learn more information about the styles.
+    #user can then go back
   end
 
 end
