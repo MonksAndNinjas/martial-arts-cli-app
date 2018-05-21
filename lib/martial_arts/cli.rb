@@ -1,5 +1,3 @@
-require 'pry'
-
 # Our CLI Controler
 class MartialArts::CLI
 
@@ -26,9 +24,9 @@ class MartialArts::CLI
       #waits for response and then returns request
       case input
       when "1"
-        popular_martial_arts
+        popular_martial_arts_submenu
       when "2"
-        martial_arts_by_country
+        martial_arts_by_country_submenu
       when "3"
         puts "List of all styles available method"
       when "4"
@@ -41,7 +39,7 @@ class MartialArts::CLI
     end
   end
 
-  def popular_martial_arts
+  def popular_martial_arts_submenu
     #this outputs the 10 most popular martial arts in the world.
     popular_list
     input = nil
@@ -69,7 +67,7 @@ class MartialArts::CLI
     end
   end
 
-  def martial_arts_by_country
+  def martial_arts_by_country_submenu
     country_list
     size = MartialArts::Countries.all.size
     input = nil
