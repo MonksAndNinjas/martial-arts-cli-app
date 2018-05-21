@@ -43,7 +43,7 @@ class MartialArts::CLI
 
   def popular_martial_arts
     #this outputs the 10 most popular martial arts in the world.
-    list
+    popular_list
     input = nil
 
     while input != "back"
@@ -60,7 +60,7 @@ class MartialArts::CLI
 
         puts "Type list, or back"
       when "list"
-        list
+        popular_list
       when "back"
         break
       else
@@ -80,14 +80,8 @@ class MartialArts::CLI
       case input
       when /\d\d*/ #Checks if string is a number
         if (1...size+1).include?(input.to_i) #makes sure number is within range.
-          styles_by_country = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
-          #move this to country class when ready
-          puts "Martial Art styles from #{MartialArts::Countries.all[input.to_i - 1]}"  #list styles form country
-          styles_by_country.each.with_index(1) do |style_instance, i|
-            puts "#{i}. #{style_instance}" #When setup change to style_instance.name
-          end
-          puts "Enter the corresponding number for more information about the style"
-          puts "Otherwise type back or list"
+          styles_by_country_list(input)
+          styles_list
         else
           puts "I'm confused, can you try that again?"
         end
@@ -101,13 +95,13 @@ class MartialArts::CLI
     end
   end
 
-  def list
+  def popular_list
     MartialArts::Styles.todays_list.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance}" #when setup change to style_instance.name
     end
 
     puts  "Enter the corresponding number for more information on the style of martial art."
-    puts  "Otherwise, type back"
+    puts  "Otherwise, type back or list"
   end
 
   def country_list
@@ -118,6 +112,50 @@ class MartialArts::CLI
 
     puts "Enter the corresponding number to see all martial arts from that country"
     puts "Otherwise, type back or list"
+  end
+
+  def styles_list
+    styles_by_country = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
+    size = styles_by_country.size
+    input = nil
+
+    while input != "back"
+      input = gets.strip.downcase
+
+      case input
+      when /\d\d*/ #Checks if string is a number
+        if (1...size+1).include?(input.to_i) #makes sure number is within range.
+          style = styles_by_country[input.to_i - 1]
+
+          puts "style.name"
+          puts "style.country"
+          puts "style.fighting_focus"
+          puts "style.description"
+
+          puts "Type list, or back"
+        end
+      when "list"
+        styles_by_country_list(input)
+      when "back"
+        country_list
+        break
+      else
+        puts "I'm confused, can you try that again?"
+      end
+    end
+  end
+
+  def styles_by_country_list(input)
+    styles_by_country = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
+    #move this to country class when ready
+    puts "Martial Art styles from #{MartialArts::Countries.all[input.to_i - 1]}"  #list styles form country
+
+    styles_by_country.each.with_index(1) do |style_instance, i|
+      puts "#{i}. #{style_instance}" #When setup change to style_instance.name
+    end
+
+    puts "Enter the corresponding number for more information about the style"
+    puts "Otherwise type back or list"
   end
 
 end
