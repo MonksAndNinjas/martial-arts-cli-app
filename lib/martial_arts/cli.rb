@@ -28,7 +28,7 @@ class MartialArts::CLI
       when "2"
         martial_arts_by_country_submenu
       when "3"
-        puts "List of all styles available method"
+        all_styles
       when "4"
         puts "List of martial arts by fighting-focus method"
       when "exit"
@@ -92,6 +92,8 @@ class MartialArts::CLI
       end
     end
   end
+
+  def
 
   def popular_list
     MartialArts::Styles.todays_list.each.with_index(1) do |style_instance, i|
