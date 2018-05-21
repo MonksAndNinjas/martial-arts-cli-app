@@ -41,16 +41,20 @@ class MartialArts::CLI
     end
   end
 
-  def popular_martial_arts
-    #this outputs the 10 most popular martial arts in the world.
+  def list
     MartialArts::Styles.todays_list.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance}"
     end
 
-    puts  "Type the corresponding number for more information on the style of martial art."
+    puts  "Enter the corresponding number for more information on the style of martial art."
     puts  "Otherwise, type back"
-    #can't exit program when user is in this method so won't give exit as an option for now
+  end
+
+  def popular_martial_arts
+    #this outputs the 10 most popular martial arts in the world.
+    list
     input = nil
+
     while input != "back"
       input = gets.strip.downcase
 
@@ -63,8 +67,11 @@ class MartialArts::CLI
         puts "style.fighting_focus"
         puts "style.description"
 
+        puts "Type list, or back"
+      when "list"
+        list
       when "back"
-        break    #don't want user to have to type exit multiple times to exit app, thus nil and not method.
+        break
       else
         puts "I'm confused, can you try that again"
       end
