@@ -78,25 +78,32 @@ class MartialArts::CLI
     end
   end
 
-  def martial_arts_by_country
+  def country_list
     #goes into the Country class to retrieve array of all countries
-    #puts a list of countries without repetitions
     MartialArts::Countries.all.each.with_index(1) do |country_instance, i|
       puts "#{i}. #{country_instance}" #When setup change to country_instance.name
-    end
+    end                                #check at some point for uniqueness
 
     puts "Enter the corresponding number to see all martial arts from that country"
+    puts "Otherwise, type back or list"
+  end
 
+  def martial_arts_by_country
+    country_list
     input = nil
+
     while input != "back"
       input = gets.strip.downcase
 
       case input
-      when input < MartialArts::Countries.all.size and input > 0
+      when input.to_i < MartialArts::Countries.all.size, input.to_i > 0
         country_instance.country_styles.each.with_index(1) do |style_instance, i|
           puts "#{i}. #{style_instance}" #When setup change to style_instance.name
+        end
       when "list"
+        country_list
       when "back"
+        break
       else
         puts "I'm confused, can you try that again?"
       end
