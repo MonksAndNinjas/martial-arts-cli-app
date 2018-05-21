@@ -79,14 +79,15 @@ class MartialArts::CLI
 
       case input
       when /\d\d*/ #Checks if string is a number
-        if input.to_i < size and input.to_i > 0 #makes sure number is within range.
+        if (1...size+1).include?(input.to_i) #makes sure number is within range.
           styles_by_country = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
           #move this to country class when ready
+          puts "Martial Art styles from #{MartialArts::Countries.all[input.to_i - 1]}"  #list styles form country
           styles_by_country.each.with_index(1) do |style_instance, i|
             puts "#{i}. #{style_instance}" #When setup change to style_instance.name
           end
           puts "Enter the corresponding number for more information about the style"
-          puts "Otherwise type back or countries"
+          puts "Otherwise type back or list"
         else
           puts "I'm confused, can you try that again?"
         end
