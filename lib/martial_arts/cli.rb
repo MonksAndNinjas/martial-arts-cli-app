@@ -73,7 +73,7 @@ class MartialArts::CLI
       when "back"
         break
       else
-        puts "I'm confused, can you try that again"
+        puts "I'm confused, can you try that again?"
       end
     end
   end
@@ -85,7 +85,23 @@ class MartialArts::CLI
       puts "#{i}. #{country_instance}" #When setup change to country_instance.name
     end
 
-    puts "Choose one of us to see martial arts native to our country"
+    puts "Enter the corresponding number to see all martial arts from that country"
+
+    input = nil
+    while input != "back"
+      input = gets.strip.downcase
+
+      case input
+      when input < MartialArts::Countries.all.size and input > 0
+        country_instance.country_styles.each.with_index(1) do |style_instance, i|
+          puts "#{i}. #{style_instance}" #When setup change to style_instance.name
+      when "list"
+      when "back"
+      else
+        puts "I'm confused, can you try that again?"
+      end
+    end
+
     puts "Enter the corresponding number for more information about the style"
     puts "Otherwise type back or countries"
   end
