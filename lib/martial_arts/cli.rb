@@ -210,7 +210,7 @@ class MartialArts::CLI
       case input
       when "1", "2", "3", "4", "5"
         styles_by_focus_list(input) #won't remember this
-        
+        focus_styles_list
       when "list"
         fighting_methods_list
       when "back"
@@ -238,6 +238,9 @@ class MartialArts::CLI
 
     puts "Enter the corresponding number for more information about the style"
     puts "Otherwise type back, or list"
+  end
+
+  def focus_styles_list
   end
 
 end
