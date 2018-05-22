@@ -79,7 +79,7 @@ class MartialArts::CLI
       when /\d\d*/ #Checks if string is a number
         if (1...size+1).include?(input.to_i) #makes sure number is within range.
           styles_by_country_list(input)
-          styles_list
+          styles_list("country")                   #clarify
         else
           puts "I'm confused, can you try that again?"
         end
@@ -134,9 +134,16 @@ class MartialArts::CLI
 
       case input
       when "1", "2", "3", "4", "5"
-        MartialArts::FightingFocus.fighting_method[input - 1].each.with_index do |style_instance, i|
+
+        MartialArts::FightingFocus.fighting_method(input).each.with_index(1) do |style_instance, i|
           puts "#{i}. #{style_instance}" #change this to style_instance.name
         end
+
+        puts "Enter the corresponding number for more information about the style"
+        puts "Otherwise type back, or list"
+
+        styles_list("focus")
+
       when "list"
         fighting_methods_list
       when "back"
@@ -152,7 +159,7 @@ class MartialArts::CLI
       puts "#{i}. #{style_instance}" #when setup change to style_instance.name
     end
 
-    puts  "Enter the corresponding number for more information on the style of martial art."
+    puts  "Enter the corresponding number for more information about the style"
     puts  "Otherwise, type back or list"
   end
 
@@ -166,9 +173,14 @@ class MartialArts::CLI
     puts "Otherwise, type back or list"
   end
 
-  def styles_list
-    styles_by_country = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
-    size = styles_by_country.size
+  def styles_list(submenu)
+    if submenu == "country"
+      styles = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
+    elsif submenu == "focus"
+      styles = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
+    end
+    size = styles.size
+
     input = nil
 
     while input != "back"
@@ -177,7 +189,7 @@ class MartialArts::CLI
       case input
       when /\d\d*/ #Checks if string is a number
         if (1...size+1).include?(input.to_i) #makes sure number is within range.
-          style = styles_by_country[input.to_i - 1]
+          style = styles[input.to_i - 1]
 
           puts "style.name"
           puts "style.country"
@@ -189,9 +201,17 @@ class MartialArts::CLI
           puts "I'm confused, can you try that again?"
         end
       when "list"
-        styles_by_country_list(input)
+        if submenu == "country"
+          styles_by_country_list(input)
+        elsif submenu == "focus"
+
+        end
       when "back"
-        country_list
+        if submenu == "country"
+          country_list
+        elsif submenu == "focus"
+          fighting_focus_submenu
+        end
         break
       else
         puts "I'm confused, can you try that again?"
