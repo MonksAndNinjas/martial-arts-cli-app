@@ -241,6 +241,16 @@ class MartialArts::CLI
   end
 
   def focus_styles_list
+    styles = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
+    size = styles.size
+
+    input = nil
+
+    while input != "back"
+      input = gets.strip.downcase
+
+      case input
+    end
   end
 
 end
