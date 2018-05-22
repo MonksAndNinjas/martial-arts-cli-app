@@ -67,6 +67,15 @@ class MartialArts::CLI
     end
   end
 
+  def popular_list
+    MartialArts::Styles.todays_list.each.with_index(1) do |style_instance, i|
+      puts "#{i}. #{style_instance}" #when setup change to style_instance.name
+    end
+
+    puts  "Enter the corresponding number for more information about the style"
+    puts  "Otherwise, type back or list"
+  end
+
   def martial_arts_by_country_submenu
     country_list
     size = MartialArts::Countries.all.size
@@ -78,14 +87,71 @@ class MartialArts::CLI
       case input
       when /\d\d*/ #Checks if string is a number
         if (1...size+1).include?(input.to_i) #makes sure number is within range.
-          styles_by_country_list(input)
-          styles_list("country")                   #clarify
+          styles_by_country_list(input)   #need it to remember this input number
+          styles_list                  #clarify
         else
           puts "I'm confused, can you try that again?"
         end
       when "list"
         country_list
       when "back"
+        break
+      else
+        puts "I'm confused, can you try that again?"
+      end
+    end
+  end
+
+  def country_list
+    #goes into the Country class to retrieve array of all countries
+    MartialArts::Countries.all.each.with_index(1) do |country_instance, i|
+      puts "#{i}. #{country_instance}" #When setup change to country_instance.name
+    end                                #check at some point for uniqueness
+
+    puts "Enter the corresponding number to see all martial arts from that country"
+    puts "Otherwise, type back or list"
+  end
+
+  def styles_by_country_list(input)
+    styles_by_country = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
+    #move this to country class when ready
+    puts "Martial Art styles from #{MartialArts::Countries.all[input.to_i - 1]}"  #list styles form country
+
+    styles_by_country.each.with_index(1) do |style_instance, i|
+      puts "#{i}. #{style_instance}" #When setup change to style_instance.name
+    end
+
+    puts "Enter the corresponding number for more information about the style"
+    puts "Otherwise type back or list"
+  end
+
+  def country_styles_list
+    styles = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
+    size = styles.size
+
+    input = nil
+
+    while input != "back"
+      input = gets.strip.downcase
+
+      case input
+      when /\d\d*/ #Checks if string is a number
+        if (1...size+1).include?(input.to_i) #makes sure number is within range.
+          style = styles[input.to_i - 1]
+
+          puts "style.name"
+          puts "style.country"
+          puts "style.fighting_focus"
+          puts "style.description"
+
+          puts "Type list, or back"
+        else
+          puts "I'm confused, can you try that again?"
+        end
+      when "list"
+          styles_by_country_list(input)
+      when "back"
+          country_list
         break
       else
         puts "I'm confused, can you try that again?"
@@ -124,6 +190,15 @@ class MartialArts::CLI
     end
   end
 
+  def all_styles_list
+    MartialArts::Styles.all.each.with_index(1) do |style_instance, i|
+      puts "#{i}. #{style_instance}"  #when setup change to style_instance.name
+    end
+
+    puts  "Enter the corresponding number for more information on the style of martial art."
+    puts  "Otherwise, type back or list"
+  end
+
   def fighting_focus_submenu
     fighting_methods_list
 
@@ -134,16 +209,8 @@ class MartialArts::CLI
 
       case input
       when "1", "2", "3", "4", "5"
-
-        MartialArts::FightingFocus.fighting_method(input).each.with_index(1) do |style_instance, i|
-          puts "#{i}. #{style_instance}" #change this to style_instance.name
-        end
-
-        puts "Enter the corresponding number for more information about the style"
-        puts "Otherwise type back, or list"
-
-        styles_list("focus")
-
+        styles_by_focus_list(input) #won't remember this
+        
       when "list"
         fighting_methods_list
       when "back"
@@ -154,93 +221,6 @@ class MartialArts::CLI
     end
   end
 
-  def popular_list
-    MartialArts::Styles.todays_list.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance}" #when setup change to style_instance.name
-    end
-
-    puts  "Enter the corresponding number for more information about the style"
-    puts  "Otherwise, type back or list"
-  end
-
-  def country_list
-    #goes into the Country class to retrieve array of all countries
-    MartialArts::Countries.all.each.with_index(1) do |country_instance, i|
-      puts "#{i}. #{country_instance}" #When setup change to country_instance.name
-    end                                #check at some point for uniqueness
-
-    puts "Enter the corresponding number to see all martial arts from that country"
-    puts "Otherwise, type back or list"
-  end
-
-  def styles_list(submenu)
-    if submenu == "country"
-      styles = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
-    elsif submenu == "focus"
-      styles = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
-    end
-    size = styles.size
-
-    input = nil
-
-    while input != "back"
-      input = gets.strip.downcase
-
-      case input
-      when /\d\d*/ #Checks if string is a number
-        if (1...size+1).include?(input.to_i) #makes sure number is within range.
-          style = styles[input.to_i - 1]
-
-          puts "style.name"
-          puts "style.country"
-          puts "style.fighting_focus"
-          puts "style.description"
-
-          puts "Type list, or back"
-        else
-          puts "I'm confused, can you try that again?"
-        end
-      when "list"
-        if submenu == "country"
-          styles_by_country_list(input)
-        elsif submenu == "focus"
-
-        end
-      when "back"
-        if submenu == "country"
-          country_list
-        elsif submenu == "focus"
-          fighting_focus_submenu
-        end
-        break
-      else
-        puts "I'm confused, can you try that again?"
-      end
-    end
-  end
-
-  def styles_by_country_list(input)
-    styles_by_country = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
-    #move this to country class when ready
-    puts "Martial Art styles from #{MartialArts::Countries.all[input.to_i - 1]}"  #list styles form country
-
-    styles_by_country.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance}" #When setup change to style_instance.name
-    end
-
-    puts "Enter the corresponding number for more information about the style"
-    puts "Otherwise type back or list"
-  end
-
-  def all_styles_list
-    MartialArts::Styles.all.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance}"  #when setup change to style_instance.name
-    end
-
-    puts  "Enter the corresponding number for more information on the style of martial art."
-    puts  "Otherwise, type back or list"
-  end
-
   def fighting_methods_list
     puts "1. Striking"
     puts "2. Grappling"
@@ -249,6 +229,15 @@ class MartialArts::CLI
     puts "5. Meditative"
     puts "Enter the corresponding number for styles"
     puts "Otherwise, type back"
+  end
+
+  def styles_by_focus_list(input)
+    MartialArts::FightingFocus.fighting_method(input).each.with_index(1) do |style_instance, i|
+      puts "#{i}. #{style_instance}" #change this to style_instance.name
+    end
+
+    puts "Enter the corresponding number for more information about the style"
+    puts "Otherwise type back, or list"
   end
 
 end
