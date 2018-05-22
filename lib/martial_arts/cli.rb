@@ -130,23 +130,25 @@ class MartialArts::CLI
     input = nil
 
     while input != "back"
-      input = gets.split.downcase
+      input = gets.strip.downcase
 
       case input
       when "1"
-        puts "list of striking styles"
+        MartialArts::FightingFocus.striking
       when "2"
-        puts "list of grappling styles"
+        MartialArts::FightingFocus.grappling
       when "3"
-        puts "list of hybrid styles"
+        MartialArts::FightingFocus.hybrid
       when "4"
-        puts "list of weaponry styles"
+        MartialArts::FightingFocus.weaponry
       when "5"
-        puts "list of meditative styels"
+        MartialArts::FightingFocus.meditative
       when "list"
         fighting_methods_list
       when "back"
         break
+      else
+        puts "I'm confused, can you type that again?"
       end
     end
   end
