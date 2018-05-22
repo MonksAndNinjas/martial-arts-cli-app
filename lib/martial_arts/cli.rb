@@ -132,6 +132,16 @@ class MartialArts::CLI
     puts "5. Meditative"
     puts "Enter the corresponding number for styles"
     puts "Otherwise, type back"
+
+    input = nil
+
+    while input != "back"
+      input = gets.split.downcase
+
+      case input
+      when 
+      end
+    end
   end
 
   def popular_list
