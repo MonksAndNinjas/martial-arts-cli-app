@@ -30,7 +30,7 @@ class MartialArts::CLI
       when "3"
         all_styles_submenu
       when "4"
-        puts "List of martial arts by fighting-focus method"
+        fighting_focus_submenu
       when "exit"
         puts "Goodbye"
       else
@@ -122,6 +122,16 @@ class MartialArts::CLI
         puts "I'm confused, can you try that again?"
       end
     end
+  end
+
+  def fighting_focus_submenu
+    puts "1. Striking"
+    puts "2. Grappling"
+    puts "3. Weaponry"
+    puts "4. Hybrid"
+    puts "5. Meditative"
+    puts "Enter the corresponding number for styles"
+    puts "Otherwise, type back"
   end
 
   def popular_list
