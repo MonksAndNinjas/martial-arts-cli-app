@@ -2,23 +2,23 @@
 class MartialArts::FightingFocus
 
   def self.striking
-    puts "I am a striking list"
+    ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
   end
 
   def self.grappling
-    puts "I am a grappling list"
+    ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
   end
 
   def self.hybrid
-    puts "I am a hybrid list"
+    ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
   end
 
   def self.weaponry
-    puts "I am a weaponry list"
+    ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
   end
 
   def self.meditative
-    puts "I am a meditative list"
+    ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
   end
 
 end
