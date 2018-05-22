@@ -125,14 +125,7 @@ class MartialArts::CLI
   end
 
   def fighting_focus_submenu
-    puts "1. Striking"
-    puts "2. Grappling"
-    puts "3. Weaponry"
-    puts "4. Hybrid"
-    puts "5. Meditative"
-    puts "Enter the corresponding number for styles"
-    puts "Otherwise, type back"
-
+    fighting_methods_list
 
     input = nil
 
@@ -141,12 +134,19 @@ class MartialArts::CLI
 
       case input
       when "1"
+        puts "list of striking styles"
       when "2"
+        puts "list of grappling styles"
       when "3"
+        puts "list of hybrid styles"
       when "4"
+        puts "list of weaponry styles"
       when "5"
+        puts "list of meditative styels"
       when "list"
+        fighting_methods_list
       when "back"
+        break
       end
     end
   end
@@ -223,6 +223,16 @@ class MartialArts::CLI
 
     puts  "Enter the corresponding number for more information on the style of martial art."
     puts  "Otherwise, type back or list"
+  end
+
+  def fighting_methods_list
+    puts "1. Striking"
+    puts "2. Grappling"
+    puts "3. Weaponry"
+    puts "4. Hybrid"
+    puts "5. Meditative"
+    puts "Enter the corresponding number for styles"
+    puts "Otherwise, type back"
   end
 
 end
