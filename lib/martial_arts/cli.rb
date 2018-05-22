@@ -133,16 +133,10 @@ class MartialArts::CLI
       input = gets.strip.downcase
 
       case input
-      when "1"
-        MartialArts::FightingFocus.striking
-      when "2"
-        MartialArts::FightingFocus.grappling
-      when "3"
-        MartialArts::FightingFocus.hybrid
-      when "4"
-        MartialArts::FightingFocus.weaponry
-      when "5"
-        MartialArts::FightingFocus.meditative
+      when "1", "2", "3", "4", "5"
+        MartialArts::FightingFocus.fighting_method[input - 1].each.with_index do |style_instance, i|
+          puts "#{i}. #{style_instance}" #change this to style_instance.name
+        end
       when "list"
         fighting_methods_list
       when "back"
