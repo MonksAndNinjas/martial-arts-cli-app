@@ -250,6 +250,26 @@ class MartialArts::CLI
       input = gets.strip.downcase
 
       case input
+      when /\d\d*/ #Checks if string is a number
+        if (1...size+1).include?(input.to_i) #makes sure number is within range.
+          style = styles[input.to_i - 1]
+
+          puts "style.name"
+          puts "style.country"
+          puts "style.fighting_focus"
+          puts "style.description"
+
+          puts "Type list, or back"
+        else
+          puts "I'm confused, can you try that again?"
+        end
+      when "list"
+        styles_by_focus_list(input)
+      when "back"
+        break
+      else
+        puts "I'm confused, can you try that again?"
+      end
     end
   end
 
