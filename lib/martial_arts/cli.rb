@@ -111,6 +111,8 @@ class MartialArts::CLI
           puts "style.description"
 
           puts "Type list, or back"
+        else
+          puts "I'm confused, can you try that again?"
         end
       when "list"
         all_styles_list
@@ -160,6 +162,8 @@ class MartialArts::CLI
           puts "style.description"
 
           puts "Type list, or back"
+        else
+          puts "I'm confused, can you try that again?"
         end
       when "list"
         styles_by_country_list(input)
