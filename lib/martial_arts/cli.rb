@@ -133,13 +133,20 @@ class MartialArts::CLI
     puts "Enter the corresponding number for styles"
     puts "Otherwise, type back"
 
+
     input = nil
 
     while input != "back"
       input = gets.split.downcase
 
       case input
-      when 
+      when "1"
+      when "2"
+      when "3"
+      when "4"
+      when "5"
+      when "list"
+      when "back"
       end
     end
   end
