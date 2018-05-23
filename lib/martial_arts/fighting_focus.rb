@@ -15,6 +15,10 @@ class MartialArts::FightingFocus
     end
   end
 
+  def scrape_fighting_focus
+    
+  end
+
   def self.striking
     ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
   end
