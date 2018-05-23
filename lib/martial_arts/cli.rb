@@ -77,7 +77,7 @@ class MartialArts::CLI
   end
 
   def martial_arts_by_country_submenu
-    country_list
+    MartialArts::Countries.country_list
     size = MartialArts::Countries.all.size
     input = nil
 
@@ -93,7 +93,7 @@ class MartialArts::CLI
           puts "I'm confused, can you try that again?"
         end
       when "list"
-        country_list
+        MartialArts::Countries.country_list
       when "back"
         break
       else
@@ -102,15 +102,15 @@ class MartialArts::CLI
     end
   end
 
-  def country_list
+  #def country_list
     #goes into the Country class to retrieve array of all countries
-    MartialArts::Countries.all.each.with_index(1) do |country_instance, i|
-      puts "#{i}. #{country_instance}" #When setup change to country_instance.name
-    end                                #check at some point for uniqueness
+  #  MartialArts::Countries.countries.each.with_index(1) do |country_instance, i|
+  #    puts "#{i}. #{country_instance}" #When setup change to country_instance.name
+  #  end                                #check at some point for uniqueness
 
-    puts "Enter the corresponding number to see all martial arts from that country"
-    puts "Otherwise, type back or list"
-  end
+  #  puts "Enter the corresponding number to see all martial arts from that country"
+  #  puts "Otherwise, type back or list"
+  #end
 
   def styles_by_country_list(input)
     @country_input = input
@@ -152,7 +152,7 @@ class MartialArts::CLI
       when "list"
           styles_by_country_list(@country_input)
       when "back"
-          country_list
+          MartialArts::Countries.country_list
         break
       else
         puts "I'm confused, can you try that again?"

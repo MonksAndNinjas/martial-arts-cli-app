@@ -2,4 +2,5 @@
 
 require './lib/martial_arts'
 
+MartialArts::Countries.scrape_countries
 MartialArts::CLI.new.call
