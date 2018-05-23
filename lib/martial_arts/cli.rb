@@ -85,10 +85,10 @@ class MartialArts::CLI
       input = gets.strip.downcase
 
       case input
-      when /\d\d*/ #Checks if string is a number
-        if (1...size+1).include?(input.to_i) #makes sure number is within range.
-          styles_by_country_list(input)   #need it to remember this input number
-          styles_list                  #clarify
+      when /\d\d*/                             #Checks if string is a number
+        if (1...size+1).include?(input.to_i)   #makes sure number is within range.
+          styles_by_country_list(input)
+          country_styles_list
         else
           puts "I'm confused, can you try that again?"
         end
@@ -113,9 +113,10 @@ class MartialArts::CLI
   end
 
   def styles_by_country_list(input)
+    @country_input = input
     styles_by_country = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
     #move this to country class when ready
-    puts "Martial Art styles from #{MartialArts::Countries.all[input.to_i - 1]}"  #list styles form country
+    puts "Martial Art styles from #{MartialArts::Countries.all[input.to_i - 1]}"  #list styles from country
 
     styles_by_country.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance}" #When setup change to style_instance.name
@@ -135,8 +136,8 @@ class MartialArts::CLI
       input = gets.strip.downcase
 
       case input
-      when /\d\d*/ #Checks if string is a number
-        if (1...size+1).include?(input.to_i) #makes sure number is within range.
+      when /\d\d*/                            #Checks if string is a number
+        if (1...size+1).include?(input.to_i)  #makes sure number is within range.
           style = styles[input.to_i - 1]
 
           puts "style.name"
@@ -149,7 +150,7 @@ class MartialArts::CLI
           puts "I'm confused, can you try that again?"
         end
       when "list"
-          styles_by_country_list(input)
+          styles_by_country_list(@country_input)
       when "back"
           country_list
         break
@@ -209,7 +210,7 @@ class MartialArts::CLI
 
       case input
       when "1", "2", "3", "4", "5"
-        styles_by_focus_list(input) #won't remember this
+        styles_by_focus_list(input)
         focus_styles_list
       when "list"
         fighting_methods_list
@@ -232,6 +233,7 @@ class MartialArts::CLI
   end
 
   def styles_by_focus_list(input)
+    @focus_input = input
     MartialArts::FightingFocus.fighting_method(input).each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance}" #change this to style_instance.name
     end
@@ -258,14 +260,15 @@ class MartialArts::CLI
           puts "style.country"
           puts "style.fighting_focus"
           puts "style.description"
-
+          binding.pry
           puts "Type list, or back"
         else
           puts "I'm confused, can you try that again?"
         end
       when "list"
-        styles_by_focus_list(input)
+        styles_by_focus_list(@focus_input)
       when "back"
+        fighting_methods_list
         break
       else
         puts "I'm confused, can you try that again?"

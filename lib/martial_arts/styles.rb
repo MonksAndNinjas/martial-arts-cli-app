@@ -1,4 +1,3 @@
-require 'pry'
 
 class MartialArts::Styles
   #start here
