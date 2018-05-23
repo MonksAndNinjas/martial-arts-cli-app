@@ -12,10 +12,11 @@ class MartialArts::Styles
     styles = info.select.with_index {|_, style| style.odd?}
   end
 
-  def scrape_styles
-    doc = Nokogiri::HTML(open(https://en.wikipedia.org/wiki/List_of_martial_arts))
-    binding.pry
-
+  def self.scrape_styles
+    doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
+    styles = doc.css('.div-col.columns.column-width').css('li').collect do |style|
+      style.css('a')[0].text
+    end
   end
 
   def self.all
