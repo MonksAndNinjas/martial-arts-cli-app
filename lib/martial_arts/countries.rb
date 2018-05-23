@@ -7,7 +7,7 @@ class MartialArts::Countries
   end
 
   def self.country_list
-    self.all.each.with_index(1) {|country_instance, i| puts "#{i}. #{country_instance}"}
+    self.all.sort.each.with_index(1) {|country_instance, i| puts "#{i}. #{country_instance}"}
     puts "Enter the corresponding number to see all martial arts from that country"
     puts "Otherwise, type back or list"
     #check at some point for uniqueness
@@ -20,14 +20,19 @@ class MartialArts::Countries
 
   def self.scrape_countries
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
+    #africa = doc.css('.div-col.columns.column-width')[0].css('li')[0].css('a')[1]
 
-    countries = doc.css('.div-col.columns.column-width').each_with_index.each do |countries_string, i|
-                  if [0,3,5].include?(i) == false         # information from those indices are not needed
-                    countries_string.css('dt a').each do |country|
-                        self.all << country.text
-                    end
-                  end
-                end
+    doc.css('.div-col.columns.column-width').each_with_index.each do |countries_string, i|
+      if [0,3,5].include?(i) == false         # information from those indices are not needed
+        countries_string.css('dt a').each do |country|
+          self.all << country.text
+        end
+      elsif i == 0
+        countries_string.css('li').each do |country|
+          self.all << country.css('a')[1].text
+        end
+      end
+    end
   end
 
 end
