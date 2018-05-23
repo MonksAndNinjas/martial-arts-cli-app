@@ -12,6 +12,12 @@ class MartialArts::Styles
     styles = info.select.with_index {|_, style| style.odd?}
   end
 
+  def scrape_styles
+    doc = Nokogiri::HTML(open(https://en.wikipedia.org/wiki/List_of_martial_arts))
+    binding.pry
+
+  end
+
   def self.all
     ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
     #use array @@all

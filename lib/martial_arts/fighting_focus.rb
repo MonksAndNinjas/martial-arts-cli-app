@@ -11,12 +11,11 @@ class MartialArts::FightingFocus
     elsif input == "4"
       weaponry
     elsif input == "5"
-      meditative
+      internal
     end
   end
 
   def scrape_fighting_focus
-    
   end
 
   def self.striking
