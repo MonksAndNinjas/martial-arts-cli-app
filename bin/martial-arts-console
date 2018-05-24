@@ -2,7 +2,7 @@
 
 require './lib/martial_arts'
 
-MartialArts::Styles.scrape_styles
-MartialArts::Countries.scrape_countries
+MartialArts::Scraper.scrape_styles
+MartialArts::Scraper.scrape_countries
 MartialArts::FightingFocus.scrape_fighting_focus
 MartialArts::CLI.new.call
