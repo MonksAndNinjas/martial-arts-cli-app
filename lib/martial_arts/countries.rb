@@ -20,12 +20,13 @@ class MartialArts::Countries
 
   def self.scrape_countries
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
-    #africa = doc.css('.div-col.columns.column-width')[0].css('li')[0].css('a')[1]
+    africa = doc.css('.div-col.columns.column-width')[0].css('li')[0].css('a')[1]
 
     doc.css('.div-col.columns.column-width').each_with_index.each do |countries_string, i|
       if [0,3,5].include?(i) == false         # information from those indices are not needed
         countries_string.css('dt a').each do |country|  #All other countries
           self.all << country.text
+
         end
       elsif i == 0
         countries_string.css('li').each do |country|  #Africa

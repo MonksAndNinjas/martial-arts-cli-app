@@ -1,6 +1,6 @@
 
 class MartialArts::Styles
-  attr_accessor :name
+  attr_reader :name
   @@all = []
 
   def initialize(style)
@@ -18,7 +18,8 @@ class MartialArts::Styles
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
     doc.css('.div-col.columns.column-width').css('li').each do |style|
       if self.valid?(style.css('a')[0].text) == nil
-        self.all << MartialArts::Styles.new(style.css('a')[0].text)  #saves instance
+        #saves instance
+        self.all << MartialArts::Styles.new(style.css('a')[0].text)
       end
     end
   end
