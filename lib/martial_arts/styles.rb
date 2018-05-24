@@ -1,9 +1,6 @@
 
 class MartialArts::Styles
-  #start here
-  def self.todays_list
-    self.scrape_popular
-  end
+  @@all = []
 
   def self.scrape_popular
     #popular martial arts 2018
@@ -14,14 +11,26 @@ class MartialArts::Styles
 
   def self.scrape_styles
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
-    styles = doc.css('.div-col.columns.column-width').css('li').collect do |style|
-      style.css('a')[0].text
+    doc.css('.div-col.columns.column-width').css('li').each do |style|
+      self.all << style.css('a')[0].text if @@all.include?(style.css('a')[0].text) == false
     end
   end
 
+  def self.todays_list
+    self.scrape_popular
+  end
+
   def self.all
-    ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
-    #use array @@all
+    @@all
+  end
+
+  def self.styles_list
+    self.all.sort.each.with_index(1) do |style_instance, i|
+      puts "#{i}. #{style_instance}"  #when setup change to style_instance.name
+    end
+
+    puts  "Enter the corresponding number for more information on the style of martial art."
+    puts  "Otherwise, type back or list"
   end
 
 end
