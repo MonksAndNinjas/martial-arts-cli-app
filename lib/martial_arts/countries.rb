@@ -30,7 +30,7 @@ class MartialArts::Countries
   def self.scrape_countries
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
 
-    doc.css('.div-col.columns.column-width').each_with_index.each do |info, i|
+    countries = doc.css('.div-col.columns.column-width').each_with_index.each do |info, i|
       if [0,3,5].include?(i) == false         # information from those indices are not needed
         info.css('dt a').each do |country|  #All other countries
           #@country = country.text

@@ -1,0 +1,6 @@
+
+class MartialArts::Scraper
+
+
+
+end
