@@ -1,10 +1,11 @@
 
 class MartialArts::Styles
-  attr_reader :name
+  attr_reader :style
   @@all = []
 
-  def initialize(style)
-    @name = style
+  def initialize(style, country = nil)
+    @style = style
+    @country = country
   end
 
   def self.scrape_popular
@@ -34,9 +35,9 @@ class MartialArts::Styles
 
   def self.styles_list
     #displays list of all styles
-    sorted_styles = self.all.sort {|a,b| a.name <=> b.name }
-    sorted_styles.each.with_index(1) do |style, i|
-      puts "#{i}. #{style.name}"
+    sorted_styles = self.all.sort {|a,b| a.style <=> b.style }
+    sorted_styles.each.with_index(1) do |style_instance, i|
+      puts "#{i}. #{style_instance.style}"
     end
 
     puts  "Enter the corresponding number for more information on the style of martial art."
@@ -46,7 +47,7 @@ class MartialArts::Styles
   def self.valid?(style)
     #checks for duplicates
     self.all.detect do |style_instance|
-      style_instance.name == style
+      style_instance.style == style
     end
   end
 
