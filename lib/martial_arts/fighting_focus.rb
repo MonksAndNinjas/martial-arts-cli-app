@@ -1,9 +1,16 @@
 
 class MartialArts::FightingFocus
 
+  def self.scrape_fighting_focus
+    doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
+    style_webpages = doc.css('.div-col.columns.column-width').css('li').collect do |style|
+                       "https://en.wikipedia.org" + style.css('a')[0]['href']
+                     end                                    #retrieves info on style
+  end
+
   def self.fighting_method(input)
     if input == "1"
-      striking
+      striking        #don't have self.striking yet it still works, learn more.
     elsif input == "2"
       grappling
     elsif input == "3"
@@ -13,9 +20,6 @@ class MartialArts::FightingFocus
     elsif input == "5"
       internal
     end
-  end
-
-  def scrape_fighting_focus
   end
 
   def self.striking
