@@ -1,6 +1,11 @@
 
 class MartialArts::Styles
+  attr_reader :style
   @@all = []
+
+  def initialize(style)
+    @style = style
+  end
 
   def self.scrape_popular
     #popular martial arts 2018
@@ -12,7 +17,9 @@ class MartialArts::Styles
   def self.scrape_styles
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
     doc.css('.div-col.columns.column-width').css('li').each do |style|
-      self.all << style.css('a')[0].text if @@all.include?(style.css('a')[0].text) == false
+      if self.all.include?(style.css('a')[0].text) == false
+        style_instance = MartialArts::Styles.new(style.css('a')[0].text)
+      end
     end
   end
 
