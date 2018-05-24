@@ -1,10 +1,10 @@
 
 class MartialArts::Styles
-  attr_reader :style
+  attr_accessor :name
   @@all = []
 
   def initialize(style)
-    @style = style
+    @name = style
   end
 
   def self.scrape_popular
@@ -17,9 +17,9 @@ class MartialArts::Styles
   def self.scrape_styles
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
     doc.css('.div-col.columns.column-width').css('li').each do |style|
-      if self.all.include?(style.css('a')[0].text) == false
-        style_instance = MartialArts::Styles.new(style.css('a')[0].text)
-      end
+      valid?
+      style_instance = MartialArts::Styles.new(style.css('a')[0].text)
+
     end
   end
 
@@ -32,12 +32,15 @@ class MartialArts::Styles
   end
 
   def self.styles_list
-    self.all.sort.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance}"  #when setup change to style_instance.name
+    self.all.each.with_index(1) do |style, i|
+      puts "#{i}. #{style.name}"  #when setup change to style_instance.name
     end
 
     puts  "Enter the corresponding number for more information on the style of martial art."
     puts  "Otherwise, type back or list"
+  end
+
+  def valid?
   end
 
 end
