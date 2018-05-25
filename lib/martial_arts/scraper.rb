@@ -39,30 +39,33 @@ class MartialArts::Scraper
 
   def self.scrape_data
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
-
-    doc.css('.div-col.columns.column-width').each_with_index.each do |data, i|
-
-      if i == 0
-        data.css('li').each do |country|
-          @country = country.css('a')[1].text
-          @style = country.css('a')[0].text
-          self.all << "#{@style} - #{@country}"
-        end
-
-      elsif [0,3,5].include?(i) == false
-        data.each_with_index.each do |div_class, i|
-          if i.even?
-            @country = div_class.css('dt a').text
-            div_class.css('li').each do |style|
-              @style = style.css('a')[0].text
-              self.all << "#{@style} - #{@country}"
+    styles = doc.css('.div-col.columns.column-width').css('li').each do |style|
+        html = Nokogiri::HTML(open("https://en.wikipedia.org#{style.css('a')[0]['href']}"))
+        if html.css('table.infobox tr') != nil
+          html.css('table.infobox tr').each do |info|
+            if info.css('th').text == "Focus"
+              self.all << info.css('td a').text
             end
           end
         end
-      end
-      binding.pry
     end
-
+      #  if html.css('table.infobox td a')[0] != nil
+      #    @focus = html.css('table.infobox td a')[0].text
+      #  elsif html.css('table.infox td') != nil
+      #    @focus = html.css('table.infox td').text
+      #  else
+      #    @focus = nil
+      #  end
+      #  if html.css('table.infobox td a')[1] != nil
+      #    @country = html.css('table.infobox td a')[1].text
+      #  elsif html.css('table.infobox td a')[1] != nil
+      #    @country = html.css('table.infobox td a')[1].text
+      #  else
+      #    @country = nil
+      #  end
+      #  self.all << "#{@focus} - #{@country}"
+    #end
+    binding.pry
   end
 
   def self.all
