@@ -42,9 +42,14 @@ class MartialArts::Scraper
     styles = doc.css('.div-col.columns.column-width').css('li').each do |style|
         html = Nokogiri::HTML(open("https://en.wikipedia.org#{style.css('a')[0]['href']}"))
         if html.css('table.infobox tr') != nil
+          i = 0
           html.css('table.infobox tr').each do |info|
             if info.css('th').text == "Focus"
-              self.all << info.css('td a').text
+              @focus = info.css('td a').text
+              self.all << "#{i+1} #{@focus}"
+            elsif info.css('th').text == "Country of origin"
+              @country = info.css('td a').text
+              self.all << "#{i} #{@country}"
             end
           end
         end
