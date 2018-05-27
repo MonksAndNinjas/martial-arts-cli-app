@@ -50,13 +50,14 @@ class MartialArts::Scraper
             end
           end
         end
+        @style = html.css('h1').text
         @website = "https://en.wikipedia.org#{style.css('a')[0]['href']}"
-        if html.css('div.mw-parser-output p')[0].text.size > 30
+        if html.css('div.mw-parser-output p')[0].text.size > 20
           @description = html.css('div.mw-parser-output p')[0].text
         else
           @description = html.css('div.mw-parser-output p')[1].text
         end
-        self.all << "#{@country} - #{@focus} - #{@website} - #{@description}"
+        self.all << "0 #{@style} - 1 #{@country} - 2 #{@focus} - 3 #{@website} - 4 #{@description}"
     end
     binding.pry
   end
