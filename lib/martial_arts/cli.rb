@@ -69,7 +69,7 @@ class MartialArts::CLI
   end
 
   def popular_list
-    MartialArts::Styles.todays_list.each.with_index(1) do |style_instance, i|
+    MartialArts::Scraper.popular.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance}" #when setup change to style_instance.name
     end
 

@@ -3,5 +3,4 @@
 require './lib/martial_arts'
 
 MartialArts::Scraper.scrape_data
-MartialArts::Styles.import_styles
 MartialArts::CLI.new.call

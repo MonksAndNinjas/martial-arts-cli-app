@@ -2,6 +2,7 @@
 class MartialArts::Styles
   attr_reader :style, :country, :fighting_focus, :website, :description
   @@all = []
+  @@popular = []
 
   def initialize(style, country, fighting_focus, website, description)
     @style = style
@@ -11,12 +12,12 @@ class MartialArts::Styles
     @description = description
   end
 
-  def self.todays_list
-    MartialArts::Scraper.scrape_popular
-  end
-
   def self.all
     @@all
+  end
+
+  def self.popular
+    @@popular
   end
 
   def self.styles_list
@@ -35,20 +36,6 @@ class MartialArts::Styles
     self.all.detect do |style_instance|
       style_instance.style == style
     end
-  end
-
-  def self.import_styles
-    MartialArts::Scraper.all.each do |data_string|
-      data_array = data_string.split(" - ")
-      style = data_array[0]
-      country = data_array[1]
-      fighting_focus = data_array[2]
-      website = data_array[3]
-      description = data_array[4]
-      style_instance = MartialArts::Styles.new(style, country, fighting_focus, website, description)
-      self.all << style_instance
-    end
-
   end
 
 end
