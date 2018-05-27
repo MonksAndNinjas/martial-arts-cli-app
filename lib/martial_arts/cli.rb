@@ -3,7 +3,7 @@ class MartialArts::CLI
 
   def call
     puts "OOOOOOSSSsss"
-    
+
     #maybe want to add delay from first puts to second, maybe 3 seconds.
     puts "Choose your destiny"
 
@@ -221,9 +221,9 @@ class MartialArts::CLI
   end
 
   def styles_by_focus_list(input)
-    @focus_input = input
-    MartialArts::FightingFocus.fighting_method(input).each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance}" #change this to style_instance.name
+    @focus_input = input  #to save original input
+    MartialArts::FightingFocus.fighting_methods(input).each.with_index(1) do |fighting_focus, i|
+      puts "#{i}. #{fighting_focus}"
     end
 
     puts "Enter the corresponding number for more information about the style"
