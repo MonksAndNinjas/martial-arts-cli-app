@@ -34,4 +34,9 @@ class MartialArts::Styles
     end
   end
 
+  def import_styles
+    styles_data = MartialArts::Scraper.all
+    
+  end
+
 end

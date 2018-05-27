@@ -9,15 +9,18 @@ class MartialArts::Scraper
     styles = info.select.with_index {|_, style| style.odd?}
   end
 
-  def self.scrape_styles
-    doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
-    styles = doc.css('.div-col.columns.column-width').css('li').each do |style|
-      if MartialArts::Styles.valid?(style.css('a')[0].text) == nil
-        #saves instance
-        MartialArts::Styles.all << MartialArts::Styles.new(style.css('a')[0].text)
-      end
-    end
-  end
+  #def self.instantiate_styles
+
+
+
+    #doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
+    #styles = doc.css('.div-col.columns.column-width').css('li').each do |style|
+      #if MartialArts::Styles.valid?(style.css('a')[0].text) == nil
+      #  #saves instance
+      #  MartialArts::Styles.all << MartialArts::Styles.new(style.css('a')[0].text)
+      #end
+    #end
+  #end
 
   def self.scrape_countries
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
@@ -61,6 +64,7 @@ class MartialArts::Scraper
     end
     binding.pry
   end
+
 
   def self.all
     @@all
