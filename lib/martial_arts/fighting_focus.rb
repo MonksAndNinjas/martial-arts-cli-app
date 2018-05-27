@@ -5,7 +5,7 @@ class MartialArts::FightingFocus
 
   def initialize(fighting_focus)
     @fighting_focus = fighting_focus
-
+    self.class.all << @fighting_focus
   end
 
   def self.scrape_fighting_focus
@@ -27,6 +27,10 @@ class MartialArts::FightingFocus
     elsif input == "5"
       internal
     end
+  end
+
+  def self.all
+    @@all
   end
 
   def self.striking
