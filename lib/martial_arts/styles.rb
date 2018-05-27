@@ -6,7 +6,7 @@ class MartialArts::Styles
   def initialize(style, country, fighting_focus, website, description)
     @style = style
     @country = MartialArts::Countries.new(country)  #need to have a way of handling
-    @fighting_focus = fighting_focus
+    @fighting_focus = MartialArts::FightingFocus.new(fighting_focus)
     @website = website
     @description = description
   end
@@ -48,6 +48,7 @@ class MartialArts::Styles
       style_instance = MartialArts::Styles.new(style, country, fighting_focus, website, description)
       self.all << style_instance
     end
+
   end
 
 end

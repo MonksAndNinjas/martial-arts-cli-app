@@ -1,5 +1,12 @@
 
 class MartialArts::FightingFocus
+  attr_reader :fighting_focus
+  @@all = []
+
+  def initialize(fighting_focus)
+    @fighting_focus = fighting_focus
+
+  end
 
   def self.scrape_fighting_focus
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
