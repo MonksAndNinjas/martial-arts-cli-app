@@ -3,6 +3,7 @@ class MartialArts::CLI
 
   def call
     puts "OOOOOOSSSsss"
+    
     #maybe want to add delay from first puts to second, maybe 3 seconds.
     puts "Choose your destiny"
 
@@ -162,10 +163,16 @@ class MartialArts::CLI
       case input
       when /\d\d*/ #Checks if string is a number
         if (1...size+1).include?(input.to_i)
-          puts "style.name"
-          puts "style.country"
-          puts "style.fighting_focus"
-          puts "style.description"
+          sort_styles = MartialArts::Styles.all.sort {|a,b| a.style <=> b.style }
+          puts "Style: #{sort_styles[input.to_i-1].style}"
+          puts " "
+          puts "Country: #{sort_styles[input.to_i-1].country}"
+          puts "Fighting Focus: #{sort_styles[input.to_i-1].fighting_focus}"
+          puts " "
+          puts "Description: #{sort_styles[input.to_i-1].description}"
+          puts " "
+          puts "More Info: #{sort_styles[input.to_i-1].website}"
+          puts " "
 
           puts "Type list, or back"
         else

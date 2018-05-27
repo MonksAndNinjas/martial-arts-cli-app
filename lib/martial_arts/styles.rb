@@ -21,7 +21,7 @@ class MartialArts::Styles
 
   def self.styles_list
     #displays list of all styles
-    sorted_styles = self.all.sort {|a,b| a.style <=> b.style }
+    sorted_styles = @@all.sort {|a,b| a.style <=> b.style }
     sorted_styles.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance.style}"
     end
