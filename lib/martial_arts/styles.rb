@@ -3,9 +3,12 @@ class MartialArts::Styles
   attr_reader :style
   @@all = []
 
-  def initialize(style, country = nil)
+  def initialize(style, country = "N/A", fighting_focus = "N/A", website, description)
     @style = style
     @country = country
+    @fighting_focus = fighting_focus
+    @website = website
+    @description = description
   end
 
   def self.todays_list
