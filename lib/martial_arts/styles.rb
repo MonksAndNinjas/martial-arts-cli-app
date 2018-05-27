@@ -1,6 +1,6 @@
 
 class MartialArts::Styles
-  attr_reader :style
+  attr_reader :style, :country, :fighting_focus, :website, :description
   @@all = []
 
   def initialize(style, country = "N/A", fighting_focus = "N/A", website, description)
@@ -39,7 +39,7 @@ class MartialArts::Styles
 
   def import_styles
     styles_data = MartialArts::Scraper.all
-    
+
   end
 
 end
