@@ -1,22 +1,17 @@
 
 class MartialArts::Countries
-  attr_reader :country, :style
+  attr_reader :country
   @@all = []
 
-  def initialize(country, style = nil)
+  def initialize(country)
     @country = country
-    @style = style
-  end
-
-  def self.country_styles
-    @all
-
-    ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
+    self.class.all << @country
   end
 
   def self.country_list
-    sorted_countries = self.all.sort {|a,b| a.country <=> b.country }
-    sorted_countries.uniq.each.with_index(1) {|country_instance, i| puts "#{i}. #{country_instance.country}"}
+    sorted_list = self.all.sort {|a,b| a <=> b }
+    sorted_list.each.with_index(1) {|country, i| puts "#{i}. #{country}"}
+
     puts "Enter the corresponding number to see all martial arts from that country"
     puts "Otherwise, type back or list"
     #check at some point for uniqueness
@@ -25,9 +20,6 @@ class MartialArts::Countries
 
   def self.all
     @@all
-  end
-
-  def styles
   end
 
 end
