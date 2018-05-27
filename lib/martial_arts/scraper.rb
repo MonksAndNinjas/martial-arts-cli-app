@@ -51,8 +51,9 @@ class MartialArts::Scraper
     info = doc.css('strong').text.split(/No.\w*. | from /) #mixture of country and style
     styles = info.select.with_index {|_, style| style.odd?}
     styles.each do |style|
-      instance = MartialArts::Styles.all.find {|style_instance| style_instance.style == style }
-      MartialArts::Styles.popular << instance
+      style_instance = MartialArts::Styles.all.find {|style_instance| style_instance.style == style }
+      MartialArts::Styles.popular << style_instance
+    end
   end
 
   def self.all

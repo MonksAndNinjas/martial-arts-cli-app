@@ -24,7 +24,7 @@ class MartialArts::Styles
     #displays list of all styles
     sorted_styles = @@all.sort {|a,b| a.style <=> b.style }
     sorted_styles.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance.style}"
+      puts "#{i}. #{style_instance.style}" if style_instance.style != nil
     end
     #binding.pry
     puts  "Enter the corresponding number for more information on the style of martial art."

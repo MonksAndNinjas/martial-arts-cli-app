@@ -50,7 +50,7 @@ class MartialArts::CLI
 
       case input
       when "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
-        style = MartialArts::Styles.todays_list[input.to_i - 1]
+        style = MartialArts::Styles.popular[input.to_i - 1]
 
         puts "style.name"
         puts "style.country"
@@ -69,8 +69,10 @@ class MartialArts::CLI
   end
 
   def popular_list
-    MartialArts::Scraper.popular.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance}" #when setup change to style_instance.name
+    MartialArts::Styles.popular.each.with_index(1) do |style_instance, i|
+      if style_instance != nil
+        puts "#{i}. #{style_instance.style}" #when setup change to style_instance.name
+      end
     end
 
     puts  "Enter the corresponding number for more information about the style"
