@@ -60,9 +60,11 @@ class MartialArts::Scraper
         else
           @description = html.css('div.mw-parser-output p')[1].text
         end
-        self.all << "0 #{@style} - 1 #{@country} - 2 #{@focus} - 3 #{@website} - 4 #{@description}"
+        @country = "N/A" if @country == ""
+        @focus = "N/A" if @focus == ""
+
+        self.all << "#{@style} - #{@country} - #{@focus} - #{@website} - #{@description}"
     end
-    binding.pry
   end
 
 

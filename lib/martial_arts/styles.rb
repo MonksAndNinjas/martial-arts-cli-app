@@ -3,7 +3,7 @@ class MartialArts::Styles
   attr_reader :style, :country, :fighting_focus, :website, :description
   @@all = []
 
-  def initialize(style, country = "N/A", fighting_focus = "N/A", website, description)
+  def initialize(style, country, fighting_focus, website, description)
     @style = style
     @country = country
     @fighting_focus = fighting_focus
@@ -37,8 +37,16 @@ class MartialArts::Styles
     end
   end
 
-  def import_styles
-    styles_data = MartialArts::Scraper.all
+  def self.import_styles
+    MartialArts::Scraper.all.each do |data_string|
+      data_array = data_string.split(" - ")
+      style = data_array[0]
+      country = data_array[1]
+      fighting_focus = data_array[2]
+      website = data_array[3]
+      description = data_array[4]
+      #style_instance = MartialArts::Styles.new()
+    end
 
   end
 
