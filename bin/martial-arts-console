@@ -2,8 +2,8 @@
 
 require './lib/martial_arts'
 
-MartialArts::Scraper.scrape_styles
+MartialArts::Scraper.scrape_data
+MartialArts::Styles.import_styles
 MartialArts::Scraper.scrape_countries
 MartialArts::FightingFocus.scrape_fighting_focus
-MartialArts::Scraper.scrape_data
 MartialArts::CLI.new.call

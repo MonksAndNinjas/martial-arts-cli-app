@@ -25,7 +25,7 @@ class MartialArts::Styles
     sorted_styles.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance.style}"
     end
-
+    #binding.pry
     puts  "Enter the corresponding number for more information on the style of martial art."
     puts  "Otherwise, type back or list"
   end
@@ -45,9 +45,9 @@ class MartialArts::Styles
       fighting_focus = data_array[2]
       website = data_array[3]
       description = data_array[4]
-      #style_instance = MartialArts::Styles.new()
+      style_instance = MartialArts::Styles.new(style, country, fighting_focus, website, description)
+      self.all << style_instance
     end
-
   end
 
 end
