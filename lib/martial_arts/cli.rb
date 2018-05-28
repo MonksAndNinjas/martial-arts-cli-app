@@ -51,7 +51,9 @@ class MartialArts::CLI
       case input
       when "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
         style = MartialArts::Styles.popular[input.to_i - 1]
-        style = MartialArts::Styles.all.find {|style_instance| style_instance.country.name == "China"} if style == "Chinese Martial Arts"
+        if style == "Chinese Martial Arts"
+          style = MartialArts::Styles.all.find {|style_instance| style_instance.country.name == "China"}
+        end
         puts "Style: #{style.style}"
         puts " "
         puts "Country: #{style.country.name}"
