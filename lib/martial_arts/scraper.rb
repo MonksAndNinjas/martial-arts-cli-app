@@ -11,7 +11,7 @@ class MartialArts::Scraper
             if info.css('th').text == "Focus"
               @focus = info.css('td a').text
             elsif info.css('th').text == "Country of origin"
-              @country = info.css('td a').text
+              @country = info.css('td').text
             end
           end
         end
@@ -34,6 +34,7 @@ class MartialArts::Scraper
 
     self.import_styles
     self.import_popular
+    self.country_groups
   end
 
   def self.import_styles
@@ -60,7 +61,17 @@ class MartialArts::Scraper
         MartialArts::Styles.popular << "Chinese Martial Arts" if style == "Kung fu"
       #Kung Fu encompasses many of the chinese martial arts
     end
+  end
 
+  def self.country_groups
+    doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
+    doc.css('.div-col.columns.column-width').each_with_index do |info, i|
+      if i == 0
+        info.css('li').each {|country| MartialArts::Countries.group << country.css('a')[1].text }
+      else
+        info.css('dt a').each {|country| MartialArts::Countries.group << country.text }
+      end
+    end
   end
 
   def self.all
