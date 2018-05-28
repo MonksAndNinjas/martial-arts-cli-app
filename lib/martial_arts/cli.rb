@@ -15,6 +15,7 @@ class MartialArts::CLI
 
     while input != "exit"
       #navigation
+      puts " "
       puts "1. Popular Martial Arts"
       puts "2. Martail Arts by Country"
       puts "3. Martial Art Styles"
@@ -54,6 +55,7 @@ class MartialArts::CLI
         if style == "Chinese Martial Arts"
           style = MartialArts::Styles.all.find {|style_instance| style_instance.country.name == "China"}
         end
+        puts " "
         puts "Style: #{style.style}"
         puts " "
         puts "Country: #{style.country.name}"
@@ -76,6 +78,7 @@ class MartialArts::CLI
   end
 
   def popular_list
+    puts " "
     MartialArts::Styles.popular.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance.style}" if style_instance.class == MartialArts::Styles
       puts "#{i}. #{style_instance}" if style_instance.class == String

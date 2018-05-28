@@ -17,14 +17,15 @@ class MartialArts::Scraper
         end
         @style = html.css('h1').text
         @website = "https://en.wikipedia.org#{style.css('a')[0]['href']}"
-        nest = html.css('div.mw-parser-output p').detect do |p|
-          p.css('b')[0].text == @style
+        string = html.css('div.mw-parser-output p').detect {|p| p.text.size > 20 and p.text.include?("#{@style}") and p.text != nil }
+        if string == nil
+          @description = "N/A"
+        else
+          @description = string.text
         end
 
-           @description = nest
-
-           binding.pry
-
+          #binding.pry
+          # @description = html.css('div.mw-parser-output p')[1].text
         @country = "N/A" if @country == ""
         @focus = "N/A" if @focus == ""
 
