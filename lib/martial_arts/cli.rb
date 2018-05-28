@@ -117,13 +117,12 @@ class MartialArts::CLI
 
   def styles_by_country_list(input)
     @country_input = input
-    styles_by_country = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
     #move this to country class when ready
-    puts "Martial Art styles from #{MartialArts::Countries.all[input.to_i - 1]}"  #list styles from country
+    sorted_list = MartialArts::Countries.group.sort {|a,b| a <=> b }
+    puts "Martial Art styles from #{sorted_list[input.to_i-1]}"  #list styles from country
 
-    styles_by_country.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance}" #When setup change to style_instance.name
-    end
+    style_list = MartialArts::Styles.all.find_all {|style_instance| style_instance.country.name == sorted_list[input.to_i-1] }
+    style_list.each_with_index {|style_instance, i| puts "#{i+=1}. #{style_instance.style}"}
 
     puts "Enter the corresponding number for more information about the style"
     puts "Otherwise type back or list"

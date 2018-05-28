@@ -23,6 +23,8 @@ class MartialArts::Countries
     @@group
   end
 
+  
+
   def self.all
     @@all
   end
