@@ -5,9 +5,9 @@ class MartialArts::Styles
   @@popular = []
 
   def initialize(style, country, fighting_focus, website, description)
-    @style = style
-    @country = MartialArts::Countries.new(country)  #need to have a way of handling
-    @fighting_focus = MartialArts::FightingFocus.new(fighting_focus)
+    @style = style.strip
+    @country = MartialArts::Countries.new(country.strip)  #need to have a way of handling
+    @fighting_focus = MartialArts::FightingFocus.new(fighting_focus.strip)
     @website = website
     @description = description
   end

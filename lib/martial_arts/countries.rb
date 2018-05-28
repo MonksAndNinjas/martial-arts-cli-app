@@ -9,7 +9,7 @@ class MartialArts::Countries
     self.class.all << @name
   end
 
-  def self.country_list
+  def self.country_list     #pulling from the up to date list with corrections
     sorted_list = self.group.sort {|a,b| a <=> b }
     sorted_list.each.with_index(1) {|country, i| puts "#{i}. #{country}" }
 
@@ -23,7 +23,11 @@ class MartialArts::Countries
     @@group
   end
 
-  
+  def self.search
+      #self.group.find_all do |country|
+      #  if country.chomp == "UK" 
+  end
+
 
   def self.all
     @@all

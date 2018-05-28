@@ -121,16 +121,16 @@ class MartialArts::CLI
     sorted_list = MartialArts::Countries.group.sort {|a,b| a <=> b }
     puts "Martial Art styles from #{sorted_list[input.to_i-1]}"  #list styles from country
 
-    style_list = MartialArts::Styles.all.find_all {|style_instance| style_instance.country.name == sorted_list[input.to_i-1] }
-    style_list.each_with_index {|style_instance, i| puts "#{i+=1}. #{style_instance.style}"}
+    @style_list = MartialArts::Styles.all.find_all {|style_instance| style_instance.country.name.strip.include? "#{sorted_list[input.to_i-1]}" }
+    @style_list.each_with_index {|style_instance, i| puts "#{i+=1}. #{style_instance.style}"}
 
+    puts " "
     puts "Enter the corresponding number for more information about the style"
     puts "Otherwise type back or list"
   end
 
   def country_styles_list
-    styles = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
-    size = styles.size
+    size = @style_list.size
 
     input = nil
 
@@ -138,14 +138,21 @@ class MartialArts::CLI
       input = gets.strip.downcase
 
       case input
-      when /\d\d*/                            #Checks if string is a number
-        if (1...size+1).include?(input.to_i)  #makes sure number is within range.
-          style = styles[input.to_i - 1]
+      when /\d\d*/    #Checks if string is a number
+        style = @style_list[input.to_i-1]
 
-          puts "style.name"
-          puts "style.country"
-          puts "style.fighting_focus"
-          puts "style.description"
+        if (1...size+1).include?(input.to_i)  #makes sure number is within range.
+
+          puts " "
+          puts "Style: #{style.style}"
+          puts " "
+          puts "Country: #{style.country.name}"
+          puts "Fighting Focus: #{style.fighting_focus.name}"
+          puts " "
+          puts "Description: #{style.description}"
+          puts " "
+          puts "More Info: #{style.website}"
+          puts " "
 
           puts "Type list, or back"
         else
