@@ -51,11 +51,16 @@ class MartialArts::CLI
       case input
       when "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
         style = MartialArts::Styles.popular[input.to_i - 1]
-
-        puts "style.name"
-        puts "style.country"
-        puts "style.fighting_focus"
-        puts "style.description"
+        style = MartialArts::Styles.all.find {|style_instance| style_instance.country.name == "China"} if style == "Chinese Martial Arts"
+        puts "Style: #{style.style}"
+        puts " "
+        puts "Country: #{style.country.name}"
+        puts "Fighting Focus: #{style.fighting_focus.name}"
+        puts " "
+        puts "Description: #{style.description}"
+        puts " "
+        puts "More Info: #{style.website}"
+        puts " "
 
         puts "Type list, or back"
       when "list"
@@ -70,11 +75,11 @@ class MartialArts::CLI
 
   def popular_list
     MartialArts::Styles.popular.each.with_index(1) do |style_instance, i|
-      if style_instance != nil
-        puts "#{i}. #{style_instance.style}" #when setup change to style_instance.name
-      end
+      puts "#{i}. #{style_instance.style}" if style_instance.class == MartialArts::Styles
+      puts "#{i}. #{style_instance}" if style_instance.class == String
     end
 
+    puts  " "
     puts  "Enter the corresponding number for more information about the style"
     puts  "Otherwise, type back or list"
   end
@@ -165,15 +170,15 @@ class MartialArts::CLI
       case input
       when /\d\d*/ #Checks if string is a number
         if (1...size+1).include?(input.to_i)
-          sort_styles = MartialArts::Styles.all.sort {|a,b| a.style <=> b.style }
-          puts "Style: #{sort_styles[input.to_i-1].style}"
+          style = MartialArts::Styles.all.sort {|a,b| a.style <=> b.style }[input.to_i-1]
+          puts "Style: #{style.style}"
           puts " "
-          puts "Country: #{sort_styles[input.to_i-1].country}"
-          puts "Fighting Focus: #{sort_styles[input.to_i-1].fighting_focus}"
+          puts "Country: #{style.country.name}"
+          puts "Fighting Focus: #{style.fighting_focus.name}"
           puts " "
-          puts "Description: #{sort_styles[input.to_i-1].description}"
+          puts "Description: #{style.description}"
           puts " "
-          puts "More Info: #{sort_styles[input.to_i-1].website}"
+          puts "More Info: #{style.website}"
           puts " "
 
           puts "Type list, or back"
@@ -250,7 +255,6 @@ class MartialArts::CLI
           puts "style.country"
           puts "style.fighting_focus"
           puts "style.description"
-          binding.pry
           puts "Type list, or back"
         else
           puts "I'm confused, can you try that again?"

@@ -17,11 +17,7 @@ class MartialArts::Scraper
         end
         @style = html.css('h1').text
         @website = "https://en.wikipedia.org#{style.css('a')[0]['href']}"
-        if html.css('div.mw-parser-output p')[0].text.size > 20
-          @description = html.css('div.mw-parser-output p')[0].text
-        else
-          @description = html.css('div.mw-parser-output p')[1].text
-        end
+        @description = html.css('div.mw-parser-output p').detect {|p| p.text.size > 40}
         @country = "N/A" if @country == ""
         @focus = "N/A" if @focus == ""
 
@@ -51,9 +47,12 @@ class MartialArts::Scraper
     info = doc.css('strong').text.split(/No.\w*. | from /) #mixture of country and style
     styles = info.select.with_index {|_, style| style.odd?}
     styles.each do |style|
-      style_instance = MartialArts::Styles.all.find {|style_instance| style_instance.style == style }
-      MartialArts::Styles.popular << style_instance
+      style_instance = MartialArts::Styles.all.find {|style_instance| style_instance.style.downcase == style.downcase }
+        MartialArts::Styles.popular << style_instance if style_instance
+        MartialArts::Styles.popular << "Chinese Martial Arts" if style == "Kung fu"
+      #Kung Fu encompasses many of the chinese martial arts
     end
+
   end
 
   def self.all

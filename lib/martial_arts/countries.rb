@@ -1,11 +1,11 @@
 
 class MartialArts::Countries
-  attr_reader :country
+  attr_reader :name
   @@all = []
 
-  def initialize(country)
-    @country = country
-    self.class.all << @country
+  def initialize(name)
+    @name = name
+    self.class.all << @name
   end
 
   def self.country_list
