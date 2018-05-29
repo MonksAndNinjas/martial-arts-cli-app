@@ -20,6 +20,7 @@ class MartialArts::CLI
       puts "2. Martail Arts by Country"
       puts "3. Martial Art Styles"
       puts "4. Martial Art by Fighting-Focus"
+      puts " "
       puts "Please enter the corresponding number or type exit"
       #gets user input
       input = gets.strip.downcase
@@ -52,21 +53,9 @@ class MartialArts::CLI
       case input
       when "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
         style = MartialArts::Styles.popular[input.to_i - 1]
-        if style == "Chinese Martial Arts"
-          style = MartialArts::Styles.all.find {|style_instance| style_instance.country.name == "China"}
-        end
-        puts " "
-        puts "Style: #{style.style}"
-        puts " "
-        puts "Country: #{style.country.name}"
-        puts "Fighting Focus: #{style.fighting_focus.name}"
-        puts " "
-        puts "Description: #{style.description}"
-        puts " "
-        puts "More Info: #{style.website}"
-        puts " "
+        style = MartialArts::Styles.search_by_country("China").sample if style == "Chinese Martial Arts"
 
-        puts "Type list, or back"
+        display_info_for(style)
       when "list"
         popular_list
       when "back"
@@ -79,6 +68,7 @@ class MartialArts::CLI
 
   def popular_list
     puts " "
+
     MartialArts::Styles.popular.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance.style}" if style_instance.class == MartialArts::Styles
       puts "#{i}. #{style_instance}" if style_instance.class == String
@@ -119,7 +109,7 @@ class MartialArts::CLI
     sorted_list = MartialArts::Countries.group.sort {|a,b| a <=> b }
     puts "Martial Art styles from #{sorted_list[input.to_i-1]}"  #list styles from country
 
-    @style_list = MartialArts::Styles.all.find_all {|style_instance| style_instance.country.name.strip.include? "#{sorted_list[input.to_i-1]}" }
+    @style_list = MartialArts::Styles.search_by_country(sorted_list[input.to_i-1])
     @style_list.each_with_index {|style_instance, i| puts "#{i+=1}. #{style_instance.style}"}
 
     messages("user")
@@ -138,18 +128,7 @@ class MartialArts::CLI
 
         if (1...size+1).include?(input.to_i)  #makes sure number is within range.
 
-          puts " "
-          puts "Style: #{style.style}"
-          puts " "
-          puts "Country: #{style.country.name}"
-          puts "Fighting Focus: #{style.fighting_focus.name}"
-          puts " "
-          puts "Description: #{style.description}"
-          puts " "
-          puts "More Info: #{style.website}"
-          puts " "
-
-          puts "Type list, or back"
+          display_info_for(style)
         else
           messages("invalid")
         end
@@ -178,17 +157,7 @@ class MartialArts::CLI
         if (1...size+1).include?(input.to_i)
           style = MartialArts::Styles.all.sort {|a,b| a.style <=> b.style }[input.to_i-1]
 
-          puts "Style: #{style.style}"
-          puts " "
-          puts "Country: #{style.country.name}"
-          puts "Fighting Focus: #{style.fighting_focus.name}"
-          puts " "
-          puts "Description: #{style.description}"
-          puts " "
-          puts "More Info: #{style.website}"
-          puts " "
-
-          puts "Type list, or back"
+          display_info_for(style)
         else
           messages("invalid")
         end
@@ -258,18 +227,7 @@ class MartialArts::CLI
 
         if (1...size+1).include?(input.to_i) #makes sure number is within range.
 
-          puts " "
-          puts "Style: #{style.style}"
-          puts " "
-          puts "Country: #{style.country.name}"
-          puts "Fighting Focus: #{style.fighting_focus.name}"
-          puts " "
-          puts "Description: #{style.description}"
-          puts " "
-          puts "More Info: #{style.website}"
-          puts " "
-
-          puts "Type list, or back"
+          display_info_for(style)
         else
           messages("invalid")
         end
@@ -292,6 +250,21 @@ class MartialArts::CLI
       puts "Enter the corresponding number for more information about the style"
       puts "Otherwise type back or list"
     end
+  end
+
+  def display_info_for(style)
+    puts " "
+    puts "Style: #{style.style}"
+    puts " "
+    puts "Country: #{style.country.name}"
+    puts "Fighting Focus: #{style.fighting_focus.name}"
+    puts " "
+    puts "Description: #{style.description}"
+    puts " "
+    puts "More Info: #{style.website}"
+    puts " "
+
+    puts "Type list, or back"
   end
 
 end

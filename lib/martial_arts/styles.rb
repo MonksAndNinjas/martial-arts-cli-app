@@ -31,11 +31,8 @@ class MartialArts::Styles
     puts  "Otherwise, type back or list"
   end
 
-  def self.valid?(style)
-    #checks for duplicates
-    self.all.detect do |style_instance|
-      style_instance.style == style
-    end
+  def self.search_by_country(country)
+    self.all.find_all {|style_instance| style_instance.country.name.strip.include? "#{country}" }
   end
 
 end

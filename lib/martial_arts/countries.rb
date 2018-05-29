@@ -23,12 +23,6 @@ class MartialArts::Countries
     @@group
   end
 
-  def self.search
-      #self.group.find_all do |country|
-      #  if country.chomp == "UK" 
-  end
-
-
   def self.all
     @@all
   end
