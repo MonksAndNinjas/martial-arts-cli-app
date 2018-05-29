@@ -130,8 +130,6 @@ class MartialArts::CLI
   end
 
   def country_styles_list
-    size = @style_list.size
-
     input = nil
 
     while input != "back"
@@ -140,6 +138,7 @@ class MartialArts::CLI
       case input
       when /\d\d*/    #Checks if string is a number
         style = @style_list[input.to_i-1]
+        size = @style_list.size
 
         if (1...size+1).include?(input.to_i)  #makes sure number is within range.
 
@@ -182,6 +181,7 @@ class MartialArts::CLI
       when /\d\d*/ #Checks if string is a number
         if (1...size+1).include?(input.to_i)
           style = MartialArts::Styles.all.sort {|a,b| a.style <=> b.style }[input.to_i-1]
+
           puts "Style: #{style.style}"
           puts " "
           puts "Country: #{style.country.name}"
@@ -249,9 +249,6 @@ class MartialArts::CLI
   end
 
   def focus_styles_list
-    styles = ["style0", "style1", "style2", "style3", "styel4", "style5", "style6", "style7", "style8", "style9"]
-    size = styles.size
-
     input = nil
 
     while input != "back"
@@ -259,13 +256,24 @@ class MartialArts::CLI
 
       case input
       when /\d\d*/ #Checks if string is a number
-        if (1...size+1).include?(input.to_i) #makes sure number is within range.
-          style = styles[input.to_i - 1]
+        styles_list = MartialArts::FightingFocus.fighting_methods(@focus_input).collect {|focus| focus }
+        size = styles_list.size
+        style = MartialArts::Styles.all.find {|instance| instance.style == styles_list[input.to_i-1]}
 
-          puts "style.name"
-          puts "style.country"
-          puts "style.fighting_focus"
-          puts "style.description"
+
+        if (1...size+1).include?(input.to_i) #makes sure number is within range.
+
+          puts " "
+          puts "Style: #{style.style}"
+          puts " "
+          puts "Country: #{style.country.name}"
+          puts "Fighting Focus: #{style.fighting_focus.name}"
+          puts " "
+          puts "Description: #{style.description}"
+          puts " "
+          puts "More Info: #{style.website}"
+          puts " "
+
           puts "Type list, or back"
         else
           puts "I'm confused, can you try that again?"
