@@ -36,7 +36,7 @@ class MartialArts::CLI
       when "exit"
         puts "Goodbye"
       else
-        puts "I'm confused, can you try that again?"
+        messages("invalid")
       end
     end
   end
@@ -72,7 +72,7 @@ class MartialArts::CLI
       when "back"
         break
       else
-        puts "I'm confused, can you try that again?"
+        messages("invalid")
       end
     end
   end
@@ -84,9 +84,7 @@ class MartialArts::CLI
       puts "#{i}. #{style_instance}" if style_instance.class == String
     end
 
-    puts  " "
-    puts  "Enter the corresponding number for more information about the style"
-    puts  "Otherwise, type back or list"
+    messages("user")
   end
 
   def martial_arts_by_country_submenu
@@ -103,14 +101,14 @@ class MartialArts::CLI
           styles_by_country_list(input)
           country_styles_list
         else
-          puts "I'm confused, can you try that again?"
+          messages("invalid")
         end
       when "list"
         MartialArts::Countries.country_list
       when "back"
         break
       else
-        puts "I'm confused, can you try that again?"
+        messages("invalid")
       end
     end
   end
@@ -124,9 +122,7 @@ class MartialArts::CLI
     @style_list = MartialArts::Styles.all.find_all {|style_instance| style_instance.country.name.strip.include? "#{sorted_list[input.to_i-1]}" }
     @style_list.each_with_index {|style_instance, i| puts "#{i+=1}. #{style_instance.style}"}
 
-    puts " "
-    puts "Enter the corresponding number for more information about the style"
-    puts "Otherwise type back or list"
+    messages("user")
   end
 
   def country_styles_list
@@ -155,7 +151,7 @@ class MartialArts::CLI
 
           puts "Type list, or back"
         else
-          puts "I'm confused, can you try that again?"
+          messages("invalid")
         end
       when "list"
           styles_by_country_list(@country_input)
@@ -163,7 +159,7 @@ class MartialArts::CLI
           MartialArts::Countries.country_list
         break
       else
-        puts "I'm confused, can you try that again?"
+        messages("invalid")
       end
     end
   end
@@ -194,14 +190,14 @@ class MartialArts::CLI
 
           puts "Type list, or back"
         else
-          puts "I'm confused, can you try that again?"
+          messages("invalid")
         end
       when "list"
         MartialArts::Styles.styles_list
       when "back"
         break
       else
-        puts "I'm confused, can you try that again?"
+        messages("invalid")
       end
     end
   end
@@ -223,7 +219,7 @@ class MartialArts::CLI
       when "back"
         break
       else
-        puts "I'm confused, can you type that again?"
+        messages("invalid")
       end
     end
   end
@@ -244,8 +240,7 @@ class MartialArts::CLI
       puts "#{i}. #{fighting_focus}"
     end
 
-    puts "Enter the corresponding number for more information about the style"
-    puts "Otherwise type back, or list"
+    messages("user")
   end
 
   def focus_styles_list
@@ -276,7 +271,7 @@ class MartialArts::CLI
 
           puts "Type list, or back"
         else
-          puts "I'm confused, can you try that again?"
+          messages("invalid")
         end
       when "list"
         styles_by_focus_list(@focus_input)
@@ -284,8 +279,18 @@ class MartialArts::CLI
         fighting_methods_list
         break
       else
-        puts "I'm confused, can you try that again?"
+        messages("invalid")
       end
+    end
+  end
+
+  def messages(type)
+    if type == "invalid"
+      puts "I'm confused can you try that again?"
+    elsif type == "user"
+      puts " "
+      puts "Enter the corresponding number for more information about the style"
+      puts "Otherwise type back or list"
     end
   end
 
