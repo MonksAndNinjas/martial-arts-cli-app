@@ -34,15 +34,15 @@ class MartialArts::Styles
   end
 
   def self.styles_list
-    self.all.sort {|a,b| a.style <=> b.style }
+    self.all.sort {|a,b| a.name <=> b.name }
   end
 
   def self.search_by_country(country)
-    self.all.find_all {|style_instance| style_instance.country_name.strip.include? "#{country}" }
+    self.styles_list.find_all {|style_instance| style_instance.country_name.strip.include? "#{country}" }
   end
 
   def self.search_by_focus(focus)
-    self.all.find_all {|style_instance| style_instance.fighting_focus_name.strip.include? "#{focus}" }
+    self.styles_list.find_all {|style_instance| style_instance.fighting_focus_name.strip.include? "#{focus}" }
   end
 
 end

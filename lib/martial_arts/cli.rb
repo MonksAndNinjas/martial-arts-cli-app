@@ -75,7 +75,7 @@ class MartialArts::CLI
 
   def popular_list
     MartialArts::Styles.popular.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance.style}" if style_instance.class == MartialArts::Styles
+      puts "#{i}. #{style_instance.name}" if style_instance.class == MartialArts::Styles
       puts "#{i}. #{style_instance}" if style_instance.class == String
     end
 

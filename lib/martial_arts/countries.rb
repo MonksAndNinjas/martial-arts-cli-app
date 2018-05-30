@@ -7,7 +7,6 @@ class MartialArts::Countries
   def initialize(name)
     @name = name
     @styles = []
-    self.class.unfiltered << @name
   end
 
   def add_style(style)
