@@ -1,15 +1,25 @@
 
 class MartialArts::Styles
-  attr_reader :style, :country, :fighting_focus, :website, :description
+  attr_accessor :country, :fighting_focus
+  attr_reader :name, :website, :description
   @@all = []
   @@popular = []
 
   def initialize(style, country, fighting_focus, website, description)
-    @style = style
+    @name = style
     @country = MartialArts::Countries.new(country)
     @fighting_focus = MartialArts::FightingFocus.new(fighting_focus)
     @website = website
     @description = description
+
+    @country.add_style(self)
+    @fighting_focus.add_style(self)
+  end
+
+  
+
+  def fighting_focus_name
+    self.fighting_focus.name
   end
 
   def self.all
@@ -30,7 +40,7 @@ class MartialArts::Styles
   end
 
   def self.search_by_focus(focus)
-    self.all.find_all {|style_instance| style_instance.fighting_focus.name.strip.include? "#{focus}" }
+    self.all.find_all {|style_instance| style_instance.fighting_focus_name.strip.include? "#{focus}" }
   end
 
 end

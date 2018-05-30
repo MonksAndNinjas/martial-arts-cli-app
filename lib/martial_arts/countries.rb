@@ -6,7 +6,7 @@ class MartialArts::Countries
 
   def initialize(name)
     @name = name
-    self.class.all << @name
+    self.class.unfiltered << @name
   end
 
   def self.country_list
@@ -15,12 +15,12 @@ class MartialArts::Countries
 
   def self.filtered
     #styles from the list of martial arts wikipedia page, easer to acces but not as much info
-    @@group
+    @@filtered
   end
 
   def self.unfiltered
     #countries from the style's wikipedia page, has more info but harder to access if not specific
-    @@all
+    @@unfiltered
   end
 
 end

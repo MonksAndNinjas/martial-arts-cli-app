@@ -5,7 +5,16 @@ class MartialArts::FightingFocus
 
   def initialize(fighting_focus)
     @name = fighting_focus
-    self.class.all << @name
+    @styles = []
+  end
+
+  def add_style(style)
+    @styles << style
+    style.fighting_focus = self
+  end
+
+  def styles
+    @styles
   end
 
   def self.all

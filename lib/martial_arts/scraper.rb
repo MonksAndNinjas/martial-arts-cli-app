@@ -56,7 +56,7 @@ class MartialArts::Scraper
     info = doc.css('strong').text.split(/No.\w*. | from /) #mixture of country and style
     styles = info.select.with_index {|_, style| style.odd?}
     styles.each do |style|
-      style_instance = MartialArts::Styles.all.find {|style_instance| style_instance.style.downcase == style.downcase }
+      style_instance = MartialArts::Styles.all.find {|style_instance| style_instance.name.downcase == style.downcase }
         MartialArts::Styles.popular << style_instance if style_instance
         MartialArts::Styles.popular << "Chinese Martial Arts" if style == "Kung fu"
       #Kung Fu encompasses many of the chinese martial arts
@@ -67,9 +67,9 @@ class MartialArts::Scraper
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
     doc.css('.div-col.columns.column-width').each_with_index do |info, i|
       if i == 0
-        info.css('li').each {|country| MartialArts::Countries.group << country.css('a')[1].text }
+        info.css('li').each {|country| MartialArts::Countries.unfiltered << country.css('a')[1].text }
       else
-        info.css('dt a').each {|country| MartialArts::Countries.group << country.text }
+        info.css('dt a').each {|country| MartialArts::Countries.unfiltered << country.text }
       end
     end
   end

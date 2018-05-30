@@ -98,7 +98,7 @@ class MartialArts::CLI
 
         if (1...size+1).include?(input.to_i)
           styles_by_country_list(input)
-          country_styles_list_sub_submenu
+          country_styles_sub_submenu
         else
           messages("invalid")
         end
@@ -116,7 +116,7 @@ class MartialArts::CLI
     end
   end
 
-  def country_styles_list_sub_submenu
+  def country_styles_sub_submenu
     size = @style_list.size
     input = nil
 
@@ -161,7 +161,7 @@ class MartialArts::CLI
 
   def all_styles_submenu
     MartialArts::Styles.styles_list.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance.style}" if style_instance.style != nil
+      puts "#{i}. #{style_instance.name}" if style_instance.name != nil
     end
 
     messages("user")
@@ -186,7 +186,7 @@ class MartialArts::CLI
 
       when "list"
         MartialArts::Styles.styles_list.each.with_index(1) do |style_instance, i|
-          puts "#{i}. #{style_instance.style}" if style_instance.style != nil
+          puts "#{i}. #{style_instance.name}" if style_instance.style != nil
         end
 
         messages("user")
@@ -200,20 +200,26 @@ class MartialArts::CLI
   end
 
   def fighting_focus_submenu
-    fighting_focus_list
+    @focus_list = {1 => "Striking", 2 => "Grappling", 3 => "Weaponry", 4 => "Hybrid", 5 => "Internal"}
 
     input = nil
 
     while input != "back"
+
+      @focus_list.each {|number, focus| puts "#{number}. #{focus}" }
+      messages("user")
+
       input = gets.strip.downcase
 
       case input
       when "1", "2", "3", "4", "5"
         styles_by_focus_list(input)
-        focus_styles_list_sub_submenu
+        styles_by_focus_sub_submenu
 
       when "list"
-        fighting_focus_list
+        @focus_list.each {|number, focus| puts "#{number}. #{focus}" }
+
+        messages("user")
       when "back"
         break
       else
@@ -223,7 +229,7 @@ class MartialArts::CLI
     end
   end
 
-  def focus_styles_sub_submenu
+  def styles_by_focus_sub_submenu
     size = @focus_style_list.size
     input = nil
 
@@ -242,7 +248,9 @@ class MartialArts::CLI
       when "list"
         styles_by_focus_list(@focus_input)
       when "back"
-        fighting_focus_list
+        @focus_list.each {|number, focus| puts "#{number}. #{focus}" }
+
+        messages("user")
         break
       else
         messages("invalid")
@@ -251,18 +259,11 @@ class MartialArts::CLI
     end
   end
 
-  def fighting_focus_list
-    @focus_list = {1 => "Striking", 2 => "Grappling", 3 => "Weaponry", 4 => "Hybrid", 5 => "Internal"}
-    @focus_list.each {|number, focus| puts "#{number}. #{focus}" }
-
-    messages("user")
-  end
-
   def styles_by_focus_list(input)
     @focus_input = input  #save input from focus_submenu so user can return
 
     @focus_style_list = MartialArts::Styles.search_by_focus(@focus_list[input.to_i])
-    @focus_style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.style}" }
+    @focus_style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}" }
 
     messages("user")
   end
@@ -293,10 +294,10 @@ class MartialArts::CLI
   def display_info_for(style)
 
     puts " "
-    puts "Style: #{style.style}"
+    puts "Style: #{style.name}"
     puts " "
     puts "Country: #{style.country.name}"
-    puts "Fighting Focus: #{style.fighting_focus.name}"
+    puts "Fighting Focus: #{style.fighting_focus_name}"
     puts " "
     puts "Description: #{style.description}"
     puts " "
