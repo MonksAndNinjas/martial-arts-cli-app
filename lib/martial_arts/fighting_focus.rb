@@ -8,7 +8,7 @@ class MartialArts::FightingFocus
     self.class.all << @name
   end
 
-  def self.fighting_methods(input)
+  def self.fighting_focus(input)
     list = MartialArts::Styles.all.collect do |instance|
       if instance.fighting_focus.name == "Striking" and input == "1"
         instance.style

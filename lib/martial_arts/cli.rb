@@ -55,7 +55,7 @@ class MartialArts::CLI
         style = MartialArts::Styles.popular[input.to_i - 1]
 
         if style == "Chinese Martial Arts"
-          MartialArts::Styles.search_by_country("China").each.with_index(1) do |style_instance|
+          MartialArts::Styles.search_by_country("China").each.with_index(1) do |style_instance, i|
             puts "#{i}. #{style_instance.style}"
           end
 
@@ -65,6 +65,7 @@ class MartialArts::CLI
         end
 
       when "list"
+        puts " "
         popular_list
       when "back"
         break
@@ -75,8 +76,6 @@ class MartialArts::CLI
   end
 
   def popular_list
-    puts " "
-
     MartialArts::Styles.popular.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance.style}" if style_instance.class == MartialArts::Styles
       puts "#{i}. #{style_instance}" if style_instance.class == String
@@ -90,7 +89,7 @@ class MartialArts::CLI
 
     messages("user")
 
-    size = MartialArts::Countries.all.size
+    size = MartialArts::Countries.country_list.size
     input = nil
 
     while input != "back"
@@ -196,7 +195,7 @@ class MartialArts::CLI
   end
 
   def fighting_focus_submenu
-    fighting_methods_list
+    fighting_focus_list
 
     input = nil
 
@@ -208,7 +207,7 @@ class MartialArts::CLI
         styles_by_focus_list(input)
         focus_styles_list
       when "list"
-        fighting_methods_list
+        fighting_focus_list
       when "back"
         break
       else
@@ -217,19 +216,21 @@ class MartialArts::CLI
     end
   end
 
-  def fighting_methods_list
+  def fighting_focus_list
     puts "1. Striking"
     puts "2. Grappling"
     puts "3. Weaponry"
     puts "4. Hybrid"
     puts "5. Meditative"
+    puts " "
     puts "Enter the corresponding number for styles"
     puts "Otherwise, type back"
   end
 
   def styles_by_focus_list(input)
     @focus_input = input  #to save original input
-    MartialArts::FightingFocus.fighting_methods(input).each.with_index(1) do |fighting_focus, i|
+
+    MartialArts::FightingFocus.fighting_focus(input).each.with_index(1) do |fighting_focus, i|
       puts "#{i}. #{fighting_focus}"
     end
 
@@ -237,19 +238,18 @@ class MartialArts::CLI
   end
 
   def focus_styles_list
+    styles_list = MartialArts::FightingFocus.fighting_focus(@focus_input).collect {|focus| focus }
+    size = styles_list.size
     input = nil
 
     while input != "back"
       input = gets.strip.downcase
 
       case input
-      when /\d\d*/ #Checks if string is a number
-        styles_list = MartialArts::FightingFocus.fighting_methods(@focus_input).collect {|focus| focus }
-        size = styles_list.size
-        style = MartialArts::Styles.all.find {|instance| instance.style == styles_list[input.to_i-1]}
+      when /\d\d*/
+        style = MartialArts::Styles.all.find {|instance| instance.style == styles_list[input.to_i-1] }
 
-
-        if (1...size+1).include?(input.to_i) #makes sure number is within range.
+        if (1...size+1).include?(input.to_i)
 
           display_info_for(style)
         else
@@ -258,7 +258,7 @@ class MartialArts::CLI
       when "list"
         styles_by_focus_list(@focus_input)
       when "back"
-        fighting_methods_list
+        fighting_focus_list
         break
       else
         messages("invalid")
