@@ -8,8 +8,6 @@ class MartialArts::FightingFocus
     self.class.all << @name
   end
 
-  {1 => "Striking", 2 => "Grappling", 3 => "Weaponry", 4 => "Hybrid", 5 => "Internal"}
-
   def self.all
     @@all
   end

@@ -8,34 +8,34 @@ class MartialArts::CLI
   end
 
   def menu
+    navigation = {
+      1 => [ "Popular Martial Arts", method(:popular_martial_arts_submenu) ],
+      2 => [ "Martial Arts by Country", method(:martial_arts_by_country_submenu) ],
+      3 => [ "Martial Art Styles", method(:all_styles_submenu) ],
+      4 => [ "Martial Art by Fighting-Focus", method(:fighting_focus_submenu) ]
+    }
+
     input = nil
 
     while input != "exit"
-      #navigation
+
       puts " "
-      puts "1. Popular Martial Arts"
-      puts "2. Martail Arts by Country"
-      puts "3. Martial Art Styles"
-      puts "4. Martial Art by Fighting-Focus"
+      navigation.each {|number, submenu_array| puts "#{number}. #{submenu_array[0]}" }
       puts " "
       puts "Please enter the corresponding number or type exit"
 
       input = gets.strip.downcase
 
       case input
-      when "1"
-        popular_martial_arts_submenu
-      when "2"
-        martial_arts_by_country_submenu
-      when "3"
-        all_styles_submenu
-      when "4"
-        fighting_focus_submenu
+      when "1", "2", "3", "4"
+        navigation[input.to_i][1].()
+
       when "exit"
         messages("goodbye")
       else
         messages("invalid")
       end
+
     end
   end
 
@@ -69,6 +69,7 @@ class MartialArts::CLI
       else
         messages("invalid")
       end
+
     end
   end
 
@@ -111,6 +112,7 @@ class MartialArts::CLI
       else
         messages("invalid")
       end
+
     end
   end
 
@@ -130,6 +132,7 @@ class MartialArts::CLI
         else
           messages("invalid")
         end
+
       when "list"
           styles_by_country_list(@country_input)
       when "back"
@@ -140,6 +143,7 @@ class MartialArts::CLI
       else
         messages("invalid")
       end
+
     end
   end
 
@@ -159,6 +163,7 @@ class MartialArts::CLI
     MartialArts::Styles.styles_list.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance.style}" if style_instance.style != nil
     end
+
     messages("user")
 
     size = MartialArts::Styles.all.size
@@ -169,6 +174,7 @@ class MartialArts::CLI
 
       case input
       when /\d\d*/ #Checks if string is a number
+
         if (1...size+1).include?(input.to_i)
           style = MartialArts::Styles.styles_list[input.to_i-1]
 
@@ -177,6 +183,7 @@ class MartialArts::CLI
         else
           messages("invalid")
         end
+
       when "list"
         MartialArts::Styles.styles_list.each.with_index(1) do |style_instance, i|
           puts "#{i}. #{style_instance.style}" if style_instance.style != nil
@@ -188,6 +195,7 @@ class MartialArts::CLI
       else
         messages("invalid")
       end
+
     end
   end
 
@@ -202,7 +210,8 @@ class MartialArts::CLI
       case input
       when "1", "2", "3", "4", "5"
         styles_by_focus_list(input)
-        focus_styles_list
+        focus_styles_list_sub_submenu
+
       when "list"
         fighting_focus_list
       when "back"
@@ -210,6 +219,35 @@ class MartialArts::CLI
       else
         messages("invalid")
       end
+
+    end
+  end
+
+  def focus_styles_sub_submenu
+    size = @focus_style_list.size
+    input = nil
+
+    while input != "back"
+      input = gets.strip.downcase
+
+      case input
+      when /\d\d*/
+
+        if (1...size+1).include?(input.to_i)
+          display_info_for(@focus_style_list[input.to_i-1])
+        else
+          messages("invalid")
+        end
+
+      when "list"
+        styles_by_focus_list(@focus_input)
+      when "back"
+        fighting_focus_list
+        break
+      else
+        messages("invalid")
+      end
+
     end
   end
 
@@ -221,7 +259,7 @@ class MartialArts::CLI
   end
 
   def styles_by_focus_list(input)
-    @focus_input = input  #save input for focus menu, so user can oriente themselves when going back
+    @focus_input = input  #save input from focus_submenu so user can return
 
     @focus_style_list = MartialArts::Styles.search_by_focus(@focus_list[input.to_i])
     @focus_style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.style}" }
@@ -229,50 +267,31 @@ class MartialArts::CLI
     messages("user")
   end
 
-  def focus_styles_list
-    size = @focus_style_list.size
-    input = nil
-
-    while input != "back"
-      input = gets.strip.downcase
-
-      case input
-      when /\d\d*/
-
-        if (1...size+1).include?(input.to_i)
-
-          display_info_for(@focus_style_list[input.to_i-1])
-        else
-          messages("invalid")
-        end
-      when "list"
-        styles_by_focus_list(@focus_input)
-      when "back"
-        fighting_focus_list
-        break
-      else
-        messages("invalid")
-      end
-    end
-  end
-
   def messages(type)
     if type == "gretting"
+
       puts "OOOOOOSSSsss"
-      #maybe want to add delay from first puts to second, maybe 3 seconds.
       puts "Choose your destiny"
+      #maybe want to add delay from first puts to second, maybe 3 seconds.
     elsif type == "invalid"
+
       puts "I'm confused can you try that again?"
+
     elsif type == "user"
+
       puts " "
-      puts "Enter the corresponding number for more information about the style"
+      puts "Enter the corresponding number for more information"
       puts "Otherwise type back or list"
+
     elsif type == "goodbye"
+
       puts "Goodbye"
+
     end
   end
 
   def display_info_for(style)
+
     puts " "
     puts "Style: #{style.style}"
     puts " "
@@ -285,6 +304,7 @@ class MartialArts::CLI
     puts " "
 
     puts "Type list, or back"
+
   end
 
 end

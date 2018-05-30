@@ -6,7 +6,7 @@ class MartialArts::Styles
 
   def initialize(style, country, fighting_focus, website, description)
     @style = style
-    @country = MartialArts::Countries.new(country)  #need to have a way of handling
+    @country = MartialArts::Countries.new(country)
     @fighting_focus = MartialArts::FightingFocus.new(fighting_focus)
     @website = website
     @description = description
@@ -17,6 +17,7 @@ class MartialArts::Styles
   end
 
   def self.popular
+    #top 10 list taken from simpatong website; up-to-date, but list is not dynamic
     @@popular
   end
 
