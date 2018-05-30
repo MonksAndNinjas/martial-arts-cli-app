@@ -154,7 +154,7 @@ class MartialArts::CLI
     puts "Martial Art styles from #{country}"  #list styles from country
 
     @style_list = MartialArts::Styles.search_by_country(country)
-    @style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.style}"}
+    @style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}"}
 
     messages("user")
   end
@@ -296,7 +296,7 @@ class MartialArts::CLI
     puts " "
     puts "Style: #{style.name}"
     puts " "
-    puts "Country: #{style.country.name}"
+    puts "Country: #{style.country_name}"
     puts "Fighting Focus: #{style.fighting_focus_name}"
     puts " "
     puts "Description: #{style.description}"

@@ -6,11 +6,17 @@ class MartialArts::Countries
 
   def initialize(name)
     @name = name
+    @styles = []
     self.class.unfiltered << @name
   end
 
+  def add_style(style)
+    @styles << style
+    style.country = self
+  end
+
   def self.country_list
-    sorted_list = self.filtered.sort {|a,b| a <=> b }
+    self.filtered.sort {|a,b| a <=> b }
   end
 
   def self.filtered

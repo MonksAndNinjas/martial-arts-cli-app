@@ -16,7 +16,9 @@ class MartialArts::Styles
     @fighting_focus.add_style(self)
   end
 
-  
+  def country_name
+    self.country.name
+  end
 
   def fighting_focus_name
     self.fighting_focus.name
@@ -36,7 +38,7 @@ class MartialArts::Styles
   end
 
   def self.search_by_country(country)
-    self.all.find_all {|style_instance| style_instance.country.name.strip.include? "#{country}" }
+    self.all.find_all {|style_instance| style_instance.country_name.strip.include? "#{country}" }
   end
 
   def self.search_by_focus(focus)

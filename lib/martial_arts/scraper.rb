@@ -67,9 +67,9 @@ class MartialArts::Scraper
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
     doc.css('.div-col.columns.column-width').each_with_index do |info, i|
       if i == 0
-        info.css('li').each {|country| MartialArts::Countries.unfiltered << country.css('a')[1].text }
+        info.css('li').each {|country| MartialArts::Countries.filtered << country.css('a')[1].text }
       else
-        info.css('dt a').each {|country| MartialArts::Countries.unfiltered << country.text }
+        info.css('dt a').each {|country| MartialArts::Countries.filtered << country.text }
       end
     end
   end
