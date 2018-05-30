@@ -2,10 +2,7 @@
 class MartialArts::CLI
 
   def call
-    puts "OOOOOOSSSsss"
-
-    #maybe want to add delay from first puts to second, maybe 3 seconds.
-    puts "Choose your destiny"
+    messages("greeting")
 
     menu
   end
@@ -35,7 +32,7 @@ class MartialArts::CLI
       when "4"
         fighting_focus_submenu
       when "exit"
-        puts "Goodbye"
+        messages("goodbye")
       else
         messages("invalid")
       end
@@ -217,29 +214,23 @@ class MartialArts::CLI
   end
 
   def fighting_focus_list
-    puts "1. Striking"
-    puts "2. Grappling"
-    puts "3. Weaponry"
-    puts "4. Hybrid"
-    puts "5. Meditative"
-    puts " "
-    puts "Enter the corresponding number for styles"
-    puts "Otherwise, type back"
+    @focus_list = {1 => "Striking", 2 => "Grappling", 3 => "Weaponry", 4 => "Hybrid", 5 => "Internal"}
+    @focus_list.each {|number, focus| puts "#{number}. #{focus}" }
+
+    messages("user")
   end
 
   def styles_by_focus_list(input)
-    @focus_input = input  #to save original input
+    @focus_input = input  #save input for focus menu, so user can oriente themselves when going back
 
-    MartialArts::FightingFocus.fighting_focus(input).each.with_index(1) do |fighting_focus, i|
-      puts "#{i}. #{fighting_focus}"
-    end
+    @focus_style_list = MartialArts::Styles.search_by_focus(@focus_list[input.to_i])
+    @focus_style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.style}" }
 
     messages("user")
   end
 
   def focus_styles_list
-    styles_list = MartialArts::FightingFocus.fighting_focus(@focus_input).collect {|focus| focus }
-    size = styles_list.size
+    size = @focus_style_list.size
     input = nil
 
     while input != "back"
@@ -247,11 +238,10 @@ class MartialArts::CLI
 
       case input
       when /\d\d*/
-        style = MartialArts::Styles.all.find {|instance| instance.style == styles_list[input.to_i-1] }
 
         if (1...size+1).include?(input.to_i)
 
-          display_info_for(style)
+          display_info_for(@focus_style_list[input.to_i-1])
         else
           messages("invalid")
         end
@@ -267,12 +257,18 @@ class MartialArts::CLI
   end
 
   def messages(type)
-    if type == "invalid"
+    if type == "gretting"
+      puts "OOOOOOSSSsss"
+      #maybe want to add delay from first puts to second, maybe 3 seconds.
+      puts "Choose your destiny"
+    elsif type == "invalid"
       puts "I'm confused can you try that again?"
     elsif type == "user"
       puts " "
       puts "Enter the corresponding number for more information about the style"
       puts "Otherwise type back or list"
+    elsif type == "goodbye"
+      puts "Goodbye"
     end
   end
 

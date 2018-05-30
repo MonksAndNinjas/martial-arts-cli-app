@@ -28,4 +28,8 @@ class MartialArts::Styles
     self.all.find_all {|style_instance| style_instance.country.name.strip.include? "#{country}" }
   end
 
+  def self.search_by_focus(focus)
+    self.all.find_all {|style_instance| style_instance.fighting_focus.name.strip.include? "#{focus}" }
+  end
+
 end
