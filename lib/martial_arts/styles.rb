@@ -4,6 +4,7 @@ class MartialArts::Styles
   attr_reader :name, :website, :description
   @@all = []
   @@popular = []
+  @@missing_info = []
 
   def initialize(style, country, fighting_focus, website, description)
     @name = style
@@ -12,8 +13,10 @@ class MartialArts::Styles
     @website = website
     @description = description
 
-    @country.add_style(self)
+    @country.add_style(self)              #every style belongs to a country or fighting_focus
     @fighting_focus.add_style(self)
+
+    self.class.missing_info << self  if country == "N/A" or fighting_focus == "N/A" or description == "N/A"
   end
 
   def country_name
@@ -43,6 +46,10 @@ class MartialArts::Styles
 
   def self.search_by_focus(focus) #need to setup so that cli is getting from fighting_focus_instance.styles
     self.styles_list.find_all {|style_instance| style_instance.fighting_focus_name.strip.include? "#{focus}" }
+  end
+
+  def self.missing_info
+    @@missing_info
   end
 
 end

@@ -14,9 +14,9 @@ class MartialArts::Countries
     style.country = self
   end
 
-  def styles
-    @styles
-  end
+  #def styles
+  #  @styles             styles method not needed, but fulfills country has many styles relationship
+  #end
 
   def self.country_list
     self.filtered.sort {|a,b| a <=> b }

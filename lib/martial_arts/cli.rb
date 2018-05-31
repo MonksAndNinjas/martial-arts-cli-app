@@ -30,6 +30,8 @@ class MartialArts::CLI
       when "1", "2", "3", "4"
         navigation[input.to_i][1].()
 
+      when "1017"
+        MartialArts::Styles.missing_info.each.with_index(1) {|style_instance, i| puts "#{i} #{style_instance.name}" }
       when "exit"
         messages("goodbye")
       else
