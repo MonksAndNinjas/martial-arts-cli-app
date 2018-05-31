@@ -18,6 +18,7 @@ class MartialArts::FightingFocus
   end
 
   def self.all
+    #contains fighting_focus in it's raw form; may contain 1, 2, or even 3 types of fighting_focus
     @@all
   end
 
