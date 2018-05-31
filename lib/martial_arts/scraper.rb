@@ -5,6 +5,7 @@ class MartialArts::Scraper
   def self.scrape_data
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
     doc.css('.div-col.columns.column-width li').each do |style|
+
         html = Nokogiri::HTML(open("https://en.wikipedia.org#{style.css('a')[0]['href']}"))
 
         if html.css('table.infobox tr') != nil
@@ -19,20 +20,23 @@ class MartialArts::Scraper
           end
         end
 
-        @style = html.css('h1').text
+        @style = "#{html.css('h1').text.downcase}".gsub(/(\s\Dmartial\sarts?\D)/, '') # removes generic words in style name
+        @style = "#{@style}".split.map(&:capitalize).join(' ')                        #capitalizes first letter of each word
+
         @website = "https://en.wikipedia.org#{style.css('a')[0]['href']}"
 
-        string = html.css('div.mw-parser-output p').detect {|p| p.text.size > 20 and p.text.include?("#{@style}") and p.text != nil }
-        if string == nil
+        description_info = html.css('div.mw-parser-output p').detect {|p| p.text.size > 20 and p.text.include?("#{@style}") and p.text != nil }
+        if description_info == nil
           @description = "N/A"
         else
-          @description = string.text
+         @description =  "#{description_info.text}".tr('(\D[1234567]\D)', '') #removes unwanted text
+         @description =  "#{@description}".sub('listen', '')                  #removes first occurence of listen
         end
 
-        @country = "N/A" if @country == ""
-        @focus = "N/A" if @focus == ""
+       @country = "N/A" if @country == ""
+       @focus = "N/A" if @focus == ""
 
-        self.all << "#{@style} - #{@country} - #{@focus} - #{@website} - #{@description}"
+       self.all << "#{@style} - #{@country} - #{@focus} - #{@website} - #{@description}"
     end
 
     self.import_styles

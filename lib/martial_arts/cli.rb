@@ -53,7 +53,7 @@ class MartialArts::CLI
 
         if style == "Chinese Martial Arts"
           MartialArts::Styles.search_by_country("China").each.with_index(1) do |style_instance, i|
-            puts "#{i}. #{style_instance.style}"
+            puts "#{i}. #{style_instance.name}"
           end
 
           messages("user")
@@ -191,7 +191,7 @@ class MartialArts::CLI
 
       when "list"
         MartialArts::Styles.styles_list.each.with_index(1) do |style_instance, i|
-          puts "#{i}. #{style_instance.name}" if style_instance.style != nil
+          puts "#{i}. #{style_instance.name}" if style_instance.name != nil
         end
 
         messages("user")
