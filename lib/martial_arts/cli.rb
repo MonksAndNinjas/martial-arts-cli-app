@@ -1,4 +1,4 @@
-# Our CLI Controler
+# CLI Controler
 class MartialArts::CLI
 
   def call
@@ -20,7 +20,7 @@ class MartialArts::CLI
     while input != "exit"
 
       puts " "
-      navigation.each {|number, submenu_array| puts "#{number}. #{submenu_array[0]}" }
+      navigation.each {|i, submenu_array| puts "#{i}. #{submenu_array[0]}" }
       puts " "
       puts "Please enter the corresponding number or type exit"
 
@@ -62,7 +62,6 @@ class MartialArts::CLI
         end
 
       when "list"
-        puts " "
         popular_list
       when "back"
         break
@@ -74,6 +73,7 @@ class MartialArts::CLI
   end
 
   def popular_list
+    puts " "
     MartialArts::Styles.popular.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance.name}" if style_instance.class == MartialArts::Styles
       puts "#{i}. #{style_instance}" if style_instance.class == String
@@ -83,6 +83,7 @@ class MartialArts::CLI
   end
 
   def martial_arts_by_country_submenu
+    puts " "
     MartialArts::Countries.country_list.each.with_index(1) {|country, i| puts "#{i}. #{country}"}
 
     messages("user")
@@ -94,7 +95,7 @@ class MartialArts::CLI
       input = gets.strip.downcase
 
       case input
-      when /\d\d*/
+      when /\d\d*/  #checks if input is a number
 
         if (1...size+1).include?(input.to_i)
           styles_by_country_list(input)
@@ -124,7 +125,7 @@ class MartialArts::CLI
       input = gets.strip.downcase
 
       case input
-      when /\d\d*/
+      when /\d\d*/  #checks if input is a number
 
         if (1...size+1).include?(input.to_i)
 
@@ -136,6 +137,7 @@ class MartialArts::CLI
       when "list"
           styles_by_country_list(@country_input)
       when "back"
+        puts " "
         MartialArts::Countries.country_list.each.with_index(1) {|country, i| puts "#{i}. #{country}"}
 
         messages("user")
@@ -149,9 +151,11 @@ class MartialArts::CLI
 
   def styles_by_country_list(input)
     @country_input = input
-    #move this to country class when ready
+
+    puts " "
     country = MartialArts::Countries.country_list[input.to_i-1]
-    puts "Martial Art styles from #{country}"  #list styles from country
+    puts "Martial Art styles from #{country}"
+    puts " "
 
     @style_list = MartialArts::Styles.search_by_country(country)
     @style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}"}
@@ -160,8 +164,9 @@ class MartialArts::CLI
   end
 
   def all_styles_submenu
+    puts " "
     MartialArts::Styles.styles_list.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance.name}" if style_instance.name != nil
+      puts "#{i}. #{style_instance.name}"
     end
 
     messages("user")
@@ -173,7 +178,7 @@ class MartialArts::CLI
       input = gets.strip.downcase
 
       case input
-      when /\d\d*/ #Checks if string is a number
+      when /\d\d*/ #Checks if input is a number
 
         if (1...size+1).include?(input.to_i)
           style = MartialArts::Styles.styles_list[input.to_i-1]
@@ -206,7 +211,8 @@ class MartialArts::CLI
 
     while input != "back"
 
-      @focus_list.each {|number, focus| puts "#{number}. #{focus}" }
+      puts " "
+      @focus_list.each {|i, focus| puts "#{i}. #{focus}" }
       messages("user")
 
       input = gets.strip.downcase
@@ -217,7 +223,7 @@ class MartialArts::CLI
         styles_by_focus_sub_submenu
 
       when "list"
-        @focus_list.each {|number, focus| puts "#{number}. #{focus}" }
+        @focus_list.each {|i, focus| puts "#{i}. #{focus}" }
 
         messages("user")
       when "back"
@@ -237,7 +243,7 @@ class MartialArts::CLI
       input = gets.strip.downcase
 
       case input
-      when /\d\d*/
+      when /\d\d*/  #checks if input is a number
 
         if (1...size+1).include?(input.to_i)
           display_info_for(@focus_style_list[input.to_i-1])
@@ -248,9 +254,6 @@ class MartialArts::CLI
       when "list"
         styles_by_focus_list(@focus_input)
       when "back"
-        @focus_list.each {|number, focus| puts "#{number}. #{focus}" }
-
-        messages("user")
         break
       else
         messages("invalid")
@@ -263,6 +266,7 @@ class MartialArts::CLI
     @focus_input = input  #save input from focus_submenu so user can return
 
     @focus_style_list = MartialArts::Styles.search_by_focus(@focus_list[input.to_i])
+    puts " "
     @focus_style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}" }
 
     messages("user")

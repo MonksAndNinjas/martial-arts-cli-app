@@ -37,11 +37,11 @@ class MartialArts::Styles
     self.all.sort {|a,b| a.name <=> b.name }
   end
 
-  def self.search_by_country(country)
+  def self.search_by_country(country) #need to setup so that cli is getting from country_instance.styles
     self.styles_list.find_all {|style_instance| style_instance.country_name.strip.include? "#{country}" }
   end
 
-  def self.search_by_focus(focus)
+  def self.search_by_focus(focus) #need to setup so that cli is getting from fighting_focus_instance.styles
     self.styles_list.find_all {|style_instance| style_instance.fighting_focus_name.strip.include? "#{focus}" }
   end
 
