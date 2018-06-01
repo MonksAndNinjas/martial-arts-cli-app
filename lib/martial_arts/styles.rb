@@ -53,6 +53,7 @@ class MartialArts::Styles
   end
 
   def self.missing_info
+    #use missing_info array to make corrections to retrieve it via the scraper's correct errors method
     @@missing_info
   end
 

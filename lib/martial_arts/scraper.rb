@@ -40,6 +40,7 @@ class MartialArts::Scraper
       @website = "https://en.wikipedia.org#{style.css('a')[0]['href']}"
 
       #checks for empty data that is converted to N/A
+
       @country = "N/A" if @country == ""
       @focus = "N/A" if @focus == ""
 
@@ -59,8 +60,6 @@ class MartialArts::Scraper
     self.all.each do |data_string|
       data_array = data_string.split(" - ")
 
-      #checks for duplicates styles; does not create style instance, but is kept in its raw form
-      #if MartialArts::Styles.all.detect {|style_instance| style_instance.name == @style}  == nil
       @style = data_array[0]
       @country = data_array[1]
       @fighting_focus = data_array[2]
@@ -84,7 +83,6 @@ class MartialArts::Scraper
     styles.each do |style|
       #assuming the style_instance will definitely be there for the most popular style name
       style_instance = MartialArts::Styles.all.find {|style_instance| style_instance.name.downcase == style.downcase }
-
       self.correct_errors(style_instance, style)
     end
   end
@@ -93,11 +91,8 @@ class MartialArts::Scraper
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
     doc.css('.div-col.columns.column-width').each_with_index do |info, i|
 
-      if i == 0
-        info.css('li').each {|country| MartialArts::Countries.filtered << country.css('a')[1].text }
-      else
-        info.css('dt a').each {|country| MartialArts::Countries.filtered << country.text }
-      end
+      info.css('li').each {|country| MartialArts::Countries.filtered << country.css('a')[1].text } if i == 0  #list for African countries
+      info.css('dt a').each {|country| MartialArts::Countries.filtered << country.text } if i > 0             #rest of the countries
 
     end
   end
@@ -108,7 +103,7 @@ class MartialArts::Scraper
 
   def self.correct_errors(info_1, info_2 = nil, info_3 = nil, info_4 = nil, info_5 = nil)
     #enter code here for problems with style info
-    if info_1 == "Karate In The United States"                                     #info_1 = style from .import_syles
+    if info_1 == "Karate In The United States"                                     #info_1 = style(String class) - from .import_syles
       @style = "American Karate"
       @country = "United States"
       @fighting_focus = "Hybrid"
