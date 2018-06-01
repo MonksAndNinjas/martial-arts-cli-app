@@ -2,5 +2,30 @@
 
 require './lib/martial_arts'
 
+puts ""
+puts ""
+puts ""
+puts ""
+puts ""
+
+puts "                                                                             \ | ,".green
+puts "            888888   88888    88888    88888888  888888888 888    88888    888 * -".green
+puts "            888 888 88 888   888 888   888  888     888    888   888 888   888 | `".cyan
+puts "            888  8888  888  888   888  888  888     888    888  888   888  888".magenta
+puts "            888   88   888 888     888 888   888    888    888 888     888 88888888".blue
+
+puts ""
+puts ""
+
+puts "                             88888    88888888  888888888 888888".green
+puts "                            888 888   888  888     888    88x".cyan
+puts "                           888   888  888  888     888        *88".magenta
+puts "                          888     888 888   888    888    8888888".blue
+
+puts "                                                                        ......please wait".blue
+puts ""
+puts ""
+puts ""
+
 MartialArts::Scraper.scrape_data
 MartialArts::CLI.new.call

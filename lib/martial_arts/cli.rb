@@ -22,7 +22,7 @@ class MartialArts::CLI
       puts " "
       navigation.each {|i, submenu_array| puts "#{i}. #{submenu_array[0]}" }
       puts " "
-      puts "Please enter the corresponding number or type exit"
+      puts "Please enter the corresponding number or type exit".yellow
 
       input = gets.strip.downcase
 
@@ -281,20 +281,22 @@ class MartialArts::CLI
   end
 
   def messages(type)
-    if type == "gretting"
+    if type == "greeting"
 
-      puts "OOOOOOSSSsss"
-      puts "Choose your destiny"
+      puts "OOOOOOSSSsss".light_red
+      puts "Choose your destiny".red
       #maybe want to add delay from first puts to second, maybe 3 seconds.
     elsif type == "invalid"
 
-      puts "I'm confused can you try that again?"
+      puts " "
+      puts "I'm confused can you try that again?".yellow
+      puts " "
 
     elsif type == "user"
 
       puts " "
-      puts "Enter the corresponding number for more information"
-      puts "Otherwise type back or list"
+      puts "Enter the corresponding number for more information".yellow
+      puts "#{"Otherwise type".yellow} list #{"or".yellow} back"
 
     elsif type == "goodbye"
 
@@ -316,7 +318,7 @@ class MartialArts::CLI
     puts "More Info: #{style.website.green}"
     puts " "
 
-    puts "Type list, or back"
+    puts "#{"Type".yellow} list, #{"or".yellow} back"
 
   end
 
