@@ -18,11 +18,10 @@ class MartialArts::CLI
     input = nil
 
     while input != "exit"
-
       puts " "
       navigation.each {|i, submenu_array| puts "#{i}. #{submenu_array[0]}" }
       puts " "
-      puts "Please enter the corresponding number or type exit".yellow
+      puts "Please enter the corresponding number or type exit".cyan
 
       input = gets.strip.downcase
 
@@ -82,6 +81,8 @@ class MartialArts::CLI
 
   def popular_list
     puts " "
+    puts "                              POPULAR MARTIAL ARTS".magenta#15 tabs for title
+    puts " "
     MartialArts::Styles.popular.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance.name}" if style_instance.class == MartialArts::Styles
       puts "#{i}. #{style_instance}" if style_instance.class == String
@@ -91,6 +92,8 @@ class MartialArts::CLI
   end
 
   def martial_arts_by_country_submenu
+    puts " "
+    puts "                              #{"COUNTRIES".magenta}"
     puts " "
     MartialArts::Countries.country_list.each.with_index(1) {|country, i| puts "#{i}. #{country}"}
 
@@ -113,6 +116,9 @@ class MartialArts::CLI
         end
 
       when "list"
+        puts " "
+        puts "                              #{"COUNTRIES".magenta}"
+
         MartialArts::Countries.country_list.each.with_index(1) {|country, i| puts "#{i}. #{country}"}
 
         messages("user")
@@ -161,8 +167,10 @@ class MartialArts::CLI
     @country_input = input
 
     puts " "
+    puts "                              #{"ALL STYLES".magenta}"
+    puts " "
     country = MartialArts::Countries.country_list[input.to_i-1]
-    puts "Martial Art styles from #{country}"
+    puts "                              #{"MARTIAL ARTS FROM".magenta} #{country.upcase.cyan}"
     puts " "
 
     @style_list = MartialArts::Styles.search_by_country(country)
@@ -172,6 +180,8 @@ class MartialArts::CLI
   end
 
   def all_styles_submenu
+    puts " "
+    puts "                              #{"ALL STYLES".magenta}"
     puts " "
     MartialArts::Styles.styles_list.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance.name}"
@@ -198,6 +208,10 @@ class MartialArts::CLI
         end
 
       when "list"
+
+        puts " "
+        puts "                              #{"ALL STYLES".magenta}"
+
         MartialArts::Styles.styles_list.each.with_index(1) do |style_instance, i|
           puts "#{i}. #{style_instance.name}" if style_instance.name != nil
         end
@@ -213,6 +227,8 @@ class MartialArts::CLI
   end
 
   def fighting_focus_submenu
+    puts " "
+    puts "                              CHOOSE YOUR FIGHTING FOCUS".magenta
     @focus_list = {1 => "Striking", 2 => "Grappling", 3 => "Weaponry", 4 => "Hybrid", 5 => "Internal"}
 
     input = nil
@@ -231,6 +247,10 @@ class MartialArts::CLI
         styles_by_focus_sub_submenu
 
       when "list"
+
+        puts " "
+        puts "                              CHOOSE YOUR FIGHTING FOCUS".magenta
+
         @focus_list.each {|i, focus| puts "#{i}. #{focus}" }
 
         messages("user")
@@ -260,6 +280,7 @@ class MartialArts::CLI
         end
 
       when "list"
+
         styles_by_focus_list(@focus_input)
       when "back"
         break
@@ -273,6 +294,9 @@ class MartialArts::CLI
   def styles_by_focus_list(input)
     @focus_input = input  #save input from focus_submenu so user can return
 
+    puts " "
+    puts "                              #{"FIGHTING FOCUS:".magenta} #{@focus_list[@focus_input.to_i]}"
+    puts " "
     @focus_style_list = MartialArts::Styles.search_by_focus(@focus_list[input.to_i])
     puts " "
     @focus_style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}" }
@@ -283,24 +307,37 @@ class MartialArts::CLI
   def messages(type)
     if type == "greeting"
 
-      puts "OOOOOOSSSsss".light_red
-      puts "Choose your destiny".red
+      puts "OOOOOOSSSsss".magenta
+      puts "Choose your destiny".blue
       #maybe want to add delay from first puts to second, maybe 3 seconds.
     elsif type == "invalid"
 
       puts " "
-      puts "I'm confused can you try that again?".yellow
+      puts "I'm confused can you try that again?".cyan
       puts " "
 
     elsif type == "user"
 
       puts " "
-      puts "Enter the corresponding number for more information".yellow
-      puts "#{"Otherwise type".yellow} list #{"or".yellow} back"
+      puts "Enter the corresponding number for more information".light_cyan
+      puts "#{"Otherwise type".cyan} list #{"or".cyan} back"
 
     elsif type == "goodbye"
 
-      puts "Goodbye"
+  puts " "
+  puts " "
+  puts "                                #{"_ _                 _ _".green}"
+  puts "                               #{"/@)".cyan }#{"-'               '-".green}#{"(@\\".cyan}"
+  puts "                              #{"|".cyan} #{"/                     \\".green} #{"|".cyan}"
+  puts "                             #{"(,".magenta}#{".                       .".green}#{",)".magenta}"
+  puts "                             #{"|8".magenta}#{"|                       |".green}#{"8|".magenta}"
+  puts "                             #{"|8".blue}#{"|          .'.          |".yellow}#{"8|".blue}"
+  puts "                              #{".".blue} #{">       ~".yellow} #{"(".red}#{"*".yellow}#{")".red} #{"~       <".yellow} #{".".blue}"
+  puts " "
+  puts "                                        GOODBYE".blue
+  puts "                                  thanks for visiting".blue
+  puts " "
+  puts " "
 
     end
   end
@@ -308,17 +345,17 @@ class MartialArts::CLI
   def display_info_for(style)
 
     puts " "
-    puts "Style: #{style.name.blue}"
+    puts "                              #{"Style info for".magenta} #{style.name.cyan}"
     puts " "
-    puts "Country: #{style.country_name.yellow}"
+    puts "Country: #{style.country_name.green}"
     puts "Fighting Focus: #{style.fighting_focus_name.yellow}"
     puts " "
     puts "Description: #{style.description.red}"
     puts " "
-    puts "More Info: #{style.website.green}"
+    puts "More Info: #{style.website.magenta}"
     puts " "
 
-    puts "#{"Type".yellow} list, #{"or".yellow} back"
+    puts "#{"Type".cyan} list, #{"or".cyan} back"
 
   end
 
