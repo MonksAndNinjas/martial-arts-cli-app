@@ -19,7 +19,7 @@ class MartialArts::Countries
   #end
 
   def self.country_list
-    self.filtered.sort {|a,b| a <=> b }
+    self.filtered.uniq.sort {|a,b| a <=> b }
   end
 
   def self.filtered

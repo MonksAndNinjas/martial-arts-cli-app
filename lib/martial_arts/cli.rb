@@ -30,8 +30,14 @@ class MartialArts::CLI
       when "1", "2", "3", "4"
         navigation[input.to_i][1].()
 
-      when "1017"
-        MartialArts::Styles.missing_info.each.with_index(1) {|style_instance, i| puts "#{i} #{style_instance.name}" }
+      when "missing data"                                                 #hidden submenu
+        MartialArts::Styles.missing_info.each.with_index(1) do |style_instance, i|
+          puts "#{i}. #{style_instance.name}"
+          puts "Country: #{style_instance.country_name}" if style_instance.country_name == "N/A"
+          puts "Fighting-Focus: #{style_instance.fighting_focus_name}" if style_instance.fighting_focus_name == "N/A"
+          puts "Description: #{style_instance.description}" if style_instance.description == "N/A"
+          puts " "
+        end
       when "exit"
         messages("goodbye")
       else

@@ -38,7 +38,7 @@ class MartialArts::Scraper
       if description_info == nil
         @description = "N/A"
       else
-       description_edit =  "#{description_info.text}".tr('(\D[1234567]\D)', '') #removes unwanted text
+       description_edit =  "#{description_info.text}".tr('(\D[123456789]\D)', '') #removes unwanted text
        @description =  "#{description_edit}".sub('listen', '')                  #removes first occurence of listen
       end
 
@@ -51,11 +51,11 @@ class MartialArts::Scraper
     end
 
     #2 instantiates the informaiton
-    self.import_countries
+    self.import_styles
     #3 retrieves popular martial arts from a website
     self.import_popular
     #4 retrieves easier to acces country list
-    self.import_styles
+    self.import_countries
   end
 
   def self.import_styles
