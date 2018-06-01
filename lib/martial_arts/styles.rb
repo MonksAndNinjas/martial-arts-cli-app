@@ -48,6 +48,10 @@ class MartialArts::Styles
     self.styles_list.find_all {|style_instance| style_instance.fighting_focus_name.strip.include? "#{focus}" }
   end
 
+  def self.duplicates?(style)
+    self.all.detect {|style_instance| style_instance.name == style}
+  end
+
   def self.missing_info
     @@missing_info
   end

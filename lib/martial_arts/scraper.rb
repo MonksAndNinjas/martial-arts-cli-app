@@ -7,28 +7,22 @@ class MartialArts::Scraper
     #1 retrieve all style information from their individual wikipedia websites
     doc = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_martial_arts"))
     doc.css('.div-col.columns.column-width li').each do |style|
-
+      #opens the style's website
       html = Nokogiri::HTML(open("https://en.wikipedia.org#{style.css('a')[0]['href']}"))
 
       if html.css('table.infobox tr') != nil
         html.css('table.infobox tr').each do |info|
 
           #retrieves focus and country data
-          if info.css('th').text == "Focus"
-            @focus = info.css('td a').text
-          elsif info.css('th').text == "Country of origin"
-            @country = info.css('td').text
-          end
+            @focus = info.css('td a').text if info.css('th').text == "Focus"
+            @country = info.css('td').text if info.css('th').text == "Country of origin"
 
         end
       end
 
       #retrieves style data
-      style_edit = "#{html.css('h1').text.downcase}".gsub(/(\s\Dmartial\sarts?\D)/, '') # removes generic words in style name
+      style_edit = "#{html.css('h1').text.downcase}".gsub(/(\s\Dmartial\sarts?\D)/, '') #removes generic words in style name
       @style = "#{style_edit}".split.map(&:capitalize).join(' ')                        #capitalizes first letter of each word
-
-      #retrieves website data
-      @website = "https://en.wikipedia.org#{style.css('a')[0]['href']}"
 
       #retrieves description data
       description_info = html.css('div.mw-parser-output p').detect do |p|
@@ -42,12 +36,15 @@ class MartialArts::Scraper
        @description =  "#{description_edit}".sub('listen', '')                  #removes first occurence of listen
       end
 
-     #checks for empty data that is converted to N/A
-     @country = "N/A" if @country == ""
-     @focus = "N/A" if @focus == ""
+      #retrieves website data
+      @website = "https://en.wikipedia.org#{style.css('a')[0]['href']}"
 
-     #puts it all together into one string of data
-     self.all << "#{@style} - #{@country} - #{@focus} - #{@website} - #{@description}"
+      #checks for empty data that is converted to N/A
+      @country = "N/A" if @country == ""
+      @focus = "N/A" if @focus == ""
+
+      #puts it all together into one string of data
+      self.all << "#{@style} - #{@country} - #{@focus} - #{@website} - #{@description}"
     end
 
     #2 instantiates the informaiton
@@ -62,24 +59,19 @@ class MartialArts::Scraper
     self.all.each do |data_string|
       data_array = data_string.split(" - ")
 
-      style = data_array[0]
       #checks for duplicates styles; does not create style instance, but is kept in its raw form
-      if MartialArts::Styles.all.detect {|style_instance| style_instance.name == style}  == nil
-        country = data_array[1]
-        fighting_focus = data_array[2]
+      #if MartialArts::Styles.all.detect {|style_instance| style_instance.name == @style}  == nil
+      @style = data_array[0]
+      @country = data_array[1]
+      @fighting_focus = data_array[2]
+      @website = data_array[3]
+      @description = data_array[4]
 
-        if style == "Karate In The United States"
-          style = "American Karate"
-          country = "United States"
-          fighting_focus = "Hybrid"
-        end
-
-        website = data_array[3]
-        description = data_array[4]
-
-        MartialArts::Styles.all << MartialArts::Styles.new(style, country, fighting_focus, website, description)
-
+      if MartialArts::Styles.duplicates?(@style) == nil
+        self.correct_errors(@style, @country, @fighting_focus, @website, @description)
+        MartialArts::Styles.all << MartialArts::Styles.new(@style, @country, @fighting_focus, @website, @description)
       end
+
     end
   end
 
@@ -90,11 +82,10 @@ class MartialArts::Scraper
     styles = info.select.with_index {|_, style| style.odd?}
 
     styles.each do |style|
+      #assuming the style_instance will definitely be there for the most popular style name
       style_instance = MartialArts::Styles.all.find {|style_instance| style_instance.name.downcase == style.downcase }
 
-      MartialArts::Styles.popular << style_instance if style_instance
-      MartialArts::Styles.popular << "Chinese Martial Arts" if style == "Kung fu"
-      #Kung Fu encompasses many of the chinese martial arts
+      self.correct_errors(style_instance, style)
     end
   end
 
@@ -113,6 +104,19 @@ class MartialArts::Scraper
 
   def self.all
     @@all
+  end
+
+  def self.correct_errors(info_1, info_2 = nil, info_3 = nil, info_4 = nil, info_5 = nil)
+    #enter code here for problems with style info
+    if info_1 == "Karate In The United States"                                     #info_1 = style from .import_syles
+      @style = "American Karate"
+      @country = "United States"
+      @fighting_focus = "Hybrid"
+    end
+
+    MartialArts::Styles.popular << info_1 if info_1.class == MartialArts::Styles    #info_1 == style_instance - from .import_popular
+    MartialArts::Styles.popular << "Chinese Martial Arts" if info_2 == "Kung fu"    #info_2 == style - from .import_popular
+    #Kung Fu encompasses many of the chinese martial arts
   end
 
 end
