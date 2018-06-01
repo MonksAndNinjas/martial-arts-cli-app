@@ -306,14 +306,14 @@ class MartialArts::CLI
   def display_info_for(style)
 
     puts " "
-    puts "Style: #{style.name}"
+    puts "Style: #{style.name.blue}"
     puts " "
-    puts "Country: #{style.country_name}"
-    puts "Fighting Focus: #{style.fighting_focus_name}"
+    puts "Country: #{style.country_name.yellow}"
+    puts "Fighting Focus: #{style.fighting_focus_name.yellow}"
     puts " "
-    puts "Description: #{style.description}"
+    puts "Description: #{style.description.red}"
     puts " "
-    puts "More Info: #{style.website}"
+    puts "More Info: #{style.website.green}"
     puts " "
 
     puts "Type list, or back"
