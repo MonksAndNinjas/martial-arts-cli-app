@@ -29,3 +29,19 @@ puts ""
 
 MartialArts::Scraper.scrape_data
 MartialArts::CLI.new.call
+
+
+puts " "
+puts " "
+puts "                                #{"_ _                 _ _".green}"
+puts "                               #{"/@)".cyan }#{"-'               '-".green}#{"(@\\".cyan}"
+puts "                              #{"|".cyan} #{"/                     \\".green} #{"|".cyan}"
+puts "                             #{"(,".magenta}#{".                       .".green}#{",)".magenta}"
+puts "                             #{"|8".magenta}#{"|                       |".green}#{"8|".magenta}"
+puts "                             #{"|8".blue}#{"|          .'.          |".yellow}#{"8|".blue}"
+puts "                              #{".".blue} #{">       ~".yellow} #{"(".red}#{"*".yellow}#{")".red} #{"~       <".yellow} #{".".blue}"
+puts " "
+puts "                                        GOODBYE".blue
+puts "                                  thanks for visiting".blue
+puts " "
+puts " "

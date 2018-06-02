@@ -112,6 +112,8 @@ class MartialArts::Scraper
     MartialArts::Styles.popular << info_1 if info_1.class == MartialArts::Styles    #info_1 == style_instance - from .import_popular
     MartialArts::Styles.popular << "Chinese Martial Arts" if info_2 == "Kung fu"    #info_2 == style - from .import_popular
     #Kung Fu encompasses many of the chinese martial arts
+
+    #ERROR - some styles lead to sites about their people which include info on the style, it just prints out weird
   end
 
 end

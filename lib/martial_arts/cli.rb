@@ -38,7 +38,7 @@ class MartialArts::CLI
           puts " "
         end
       when "exit"
-        messages("goodbye")
+        #exits the application
       else
         messages("invalid")
       end
@@ -80,47 +80,41 @@ class MartialArts::CLI
   end
 
   def popular_list
-    puts " "
-    puts "                              POPULAR MARTIAL ARTS".magenta#15 tabs for title
-    puts " "
+
+    messages("popular")
     MartialArts::Styles.popular.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance.name}" if style_instance.class == MartialArts::Styles
       puts "#{i}. #{style_instance}" if style_instance.class == String
     end
-
     messages("user")
+
   end
 
   def martial_arts_by_country_submenu
-    puts " "
-    puts "                              #{"COUNTRIES".magenta}"
-    puts " "
-    MartialArts::Countries.country_list.each.with_index(1) {|country, i| puts "#{i}. #{country}"}
-
-    messages("user")
-
     size = MartialArts::Countries.country_list.size
     input = nil
 
     while input != "back"
       input = gets.strip.downcase
 
+      messages("countries")
+      MartialArts::Countries.country_list.each.with_index(1) {|country, i| puts "#{i}. #{country}"}
+      messages("user")
+
       case input
       when /\d\d*/  #checks if input is a number
 
         if (1...size+1).include?(input.to_i)
           styles_by_country_list(input)
+
           country_styles_sub_submenu
         else
           messages("invalid")
         end
 
       when "list"
-        puts " "
-        puts "                              #{"COUNTRIES".magenta}"
-
+        messages("countries")
         MartialArts::Countries.country_list.each.with_index(1) {|country, i| puts "#{i}. #{country}"}
-
         messages("user")
       when "back"
         break
@@ -149,11 +143,9 @@ class MartialArts::CLI
         end
 
       when "list"
-          styles_by_country_list(@country_input)
+        styles_by_country_list(@country_input)
       when "back"
-        puts " "
         MartialArts::Countries.country_list.each.with_index(1) {|country, i| puts "#{i}. #{country}"}
-
         messages("user")
         break
       else
@@ -165,35 +157,25 @@ class MartialArts::CLI
 
   def styles_by_country_list(input)
     @country_input = input
-
-    puts " "
-    puts "                              #{"ALL STYLES".magenta}"
-    puts " "
     country = MartialArts::Countries.country_list[input.to_i-1]
-    puts "                              #{"MARTIAL ARTS FROM".magenta} #{country.upcase.cyan}"
-    puts " "
-
     @style_list = MartialArts::Styles.search_by_country(country)
-    @style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}"}
 
+    messages("styles by country")
+    @style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}"}
     messages("user")
+
   end
 
   def all_styles_submenu
-    puts " "
-    puts "                              #{"ALL STYLES".magenta}"
-    puts " "
-    MartialArts::Styles.styles_list.each.with_index(1) do |style_instance, i|
-      puts "#{i}. #{style_instance.name}"
-    end
-
-    messages("user")
-
     size = MartialArts::Styles.all.size
     input = nil
 
     while input != "back"
       input = gets.strip.downcase
+
+      messages("all styles")
+      MartialArts::Styles.styles_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}" }
+      messages("user")
 
       case input
       when /\d\d*/ #Checks if input is a number
@@ -208,14 +190,10 @@ class MartialArts::CLI
         end
 
       when "list"
-
-        puts " "
-        puts "                              #{"ALL STYLES".magenta}"
-
+        messages("all styles")
         MartialArts::Styles.styles_list.each.with_index(1) do |style_instance, i|
           puts "#{i}. #{style_instance.name}" if style_instance.name != nil
         end
-
         messages("user")
       when "back"
         break
@@ -227,15 +205,13 @@ class MartialArts::CLI
   end
 
   def fighting_focus_submenu
-    puts " "
-    puts "                              CHOOSE YOUR FIGHTING FOCUS".magenta
     @focus_list = {1 => "Striking", 2 => "Grappling", 3 => "Weaponry", 4 => "Hybrid", 5 => "Internal"}
 
     input = nil
 
     while input != "back"
 
-      puts " "
+      messages("fighting focus menu")
       @focus_list.each {|i, focus| puts "#{i}. #{focus}" }
       messages("user")
 
@@ -247,12 +223,8 @@ class MartialArts::CLI
         styles_by_focus_sub_submenu
 
       when "list"
-
-        puts " "
-        puts "                              CHOOSE YOUR FIGHTING FOCUS".magenta
-
+        messages("fighting focus menu")
         @focus_list.each {|i, focus| puts "#{i}. #{focus}" }
-
         messages("user")
       when "back"
         break
@@ -280,7 +252,6 @@ class MartialArts::CLI
         end
 
       when "list"
-
         styles_by_focus_list(@focus_input)
       when "back"
         break
@@ -293,52 +264,70 @@ class MartialArts::CLI
 
   def styles_by_focus_list(input)
     @focus_input = input  #save input from focus_submenu so user can return
-
-    puts " "
-    puts "                              #{"FIGHTING FOCUS:".magenta} #{@focus_list[@focus_input.to_i]}"
-    puts " "
     @focus_style_list = MartialArts::Styles.search_by_focus(@focus_list[input.to_i])
-    puts " "
-    @focus_style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}" }
 
+    messages("styles by focus")
+    @focus_style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}" }
     messages("user")
+
   end
 
   def messages(type)
-    if type == "greeting"
+    case type
+    when "greeting"
 
       puts "OOOOOOSSSsss".magenta
       puts "Choose your destiny".blue
       #maybe want to add delay from first puts to second, maybe 3 seconds.
-    elsif type == "invalid"
+    when "invalid"
 
-      puts " "
+      puts ""
       puts "I'm confused can you try that again?".cyan
-      puts " "
+      puts ""
 
-    elsif type == "user"
+    when "user"
 
-      puts " "
+      puts ""
       puts "Enter the corresponding number for more information".light_cyan
       puts "#{"Otherwise type".cyan} list #{"or".cyan} back"
 
-    elsif type == "goodbye"
+    when "styles by focus"
 
-  puts " "
-  puts " "
-  puts "                                #{"_ _                 _ _".green}"
-  puts "                               #{"/@)".cyan }#{"-'               '-".green}#{"(@\\".cyan}"
-  puts "                              #{"|".cyan} #{"/                     \\".green} #{"|".cyan}"
-  puts "                             #{"(,".magenta}#{".                       .".green}#{",)".magenta}"
-  puts "                             #{"|8".magenta}#{"|                       |".green}#{"8|".magenta}"
-  puts "                             #{"|8".blue}#{"|          .'.          |".yellow}#{"8|".blue}"
-  puts "                              #{".".blue} #{">       ~".yellow} #{"(".red}#{"*".yellow}#{")".red} #{"~       <".yellow} #{".".blue}"
-  puts " "
-  puts "                                        GOODBYE".blue
-  puts "                                  thanks for visiting".blue
-  puts " "
-  puts " "
+      puts ""
+      puts "                              #{"FIGHTING FOCUS:".magenta} #{@focus_list[@focus_input.to_i]}"
+      puts ""
 
+    when "fighting focus menu"
+
+      puts ""
+      puts "                              CHOOSE YOUR FIGHTING FOCUS".magenta
+      puts ""
+
+    when "all styles"
+
+      puts ""
+      puts "                              #{"ALL STYLES".magenta}"
+      puts ""
+
+    when "styles by country"
+
+      puts ""
+      puts "                              #{"MARTIAL ARTS FROM".magenta} #{country.upcase.cyan}"
+      puts ""
+
+    when "countries"
+
+      puts ""
+      puts "                              #{"COUNTRIES".magenta}"
+      puts ""
+
+    when "popular"
+
+      puts " "
+      puts "                              POPULAR MARTIAL ARTS".magenta#15 tabs for title
+      puts " "
+
+    else
     end
   end
 
