@@ -38,8 +38,8 @@ puts "                               #{"/@)".cyan }#{"-'               '-".green
 puts "                              #{"|".cyan} #{"/                     \\".green} #{"|".cyan}"
 puts "                             #{"(,".magenta}#{".                       .".green}#{",)".magenta}"
 puts "                             #{"|8".magenta}#{"|                       |".green}#{"8|".magenta}"
-puts "                             #{"|8".blue}#{"|          .'.          |".yellow}#{"8|".blue}"
-puts "                              #{".".blue} #{">       ~".yellow} #{"(".red}#{"*".yellow}#{")".red} #{"~       <".yellow} #{".".blue}"
+puts "                             #{"|8".blue}#{"|                       |".yellow}#{"8|".blue}"
+puts "                              #{".".blue} #{">".yellow}                      #{"<".yellow} #{".".blue}"
 puts " "
 puts "                                        GOODBYE".blue
 puts "                                  thanks for visiting".blue
