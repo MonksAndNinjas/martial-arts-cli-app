@@ -39,7 +39,7 @@ class MartialArts::Scraper
       #retrieves website data
       @website = "https://en.wikipedia.org#{style.css('a')[0]['href']}"
 
-      #checks for empty data that is converted to N/A
+      #checks for missing data that is converted to N/A
 
       @country = "N/A" if @country == ""
       @focus = "N/A" if @focus == ""
@@ -113,7 +113,7 @@ class MartialArts::Scraper
     MartialArts::Styles.popular << "Chinese Martial Arts" if info_2 == "Kung fu"    #info_2 == style - from .import_popular
     #Kung Fu encompasses many of the chinese martial arts
 
-    #ERROR - some styles lead to sites about their people which include info on the style, it just prints out weird
+    #ERROR - some styles lead to sites about their people which include info on the style, it just prints out weird ex: Surma people
   end
 
 end

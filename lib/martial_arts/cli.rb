@@ -86,7 +86,7 @@ class MartialArts::CLI
     messages("popular")
     MartialArts::Styles.popular.each.with_index(1) do |style_instance, i|
       puts "#{i}. #{style_instance.name}" if style_instance.class == MartialArts::Styles
-      puts "#{i}. #{style_instance}" if style_instance.class == String
+      puts "#{i}. #{style_instance}" if style_instance.class == String  #This could be removed if it is performed along with the scrape
     end
     messages("user")
 
@@ -148,6 +148,7 @@ class MartialArts::CLI
       when "list"
         styles_by_country_list(@country_input)
       when "back"
+        messages("countries")
         MartialArts::Countries.country_list.each.with_index(1) {|country, i| puts "#{i}. #{country}"}
         messages("user")
         break
@@ -194,9 +195,7 @@ class MartialArts::CLI
 
       when "list"
         messages("all styles")
-        MartialArts::Styles.styles_list.each.with_index(1) do |style_instance, i|
-          puts "#{i}. #{style_instance.name}" if style_instance.name != nil
-        end
+        MartialArts::Styles.styles_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}" }
         messages("user")
       when "back"
         break
