@@ -48,8 +48,9 @@ class MartialArts::CLI
 
   def popular_martial_arts_submenu
     #this outputs the 10 most popular martial arts in the world.
-    popular_list
     input = nil
+
+    popular_list
 
     while input != "back"
       input = gets.strip.downcase
@@ -59,13 +60,14 @@ class MartialArts::CLI
         style = MartialArts::Styles.popular[input.to_i - 1]
 
         if style == "Chinese Martial Arts"
-          MartialArts::Styles.search_by_country("China").each.with_index(1) do |style_instance, i|
-            puts "#{i}. #{style_instance.name}"
+          MartialArts::Styles.search_by_country("China").each do |style_instance|
+            puts "#{display_info_for(style_instance)}"
           end
 
-          messages("user")
+          messages("list or back")
         else
           display_info_for(style)
+          messages("list or back")
         end
 
       when "list"
@@ -94,12 +96,12 @@ class MartialArts::CLI
     size = MartialArts::Countries.country_list.size
     input = nil
 
+    messages("countries")
+    MartialArts::Countries.country_list.each.with_index(1) {|country, i| puts "#{i}. #{country}"}
+    messages("user")
+
     while input != "back"
       input = gets.strip.downcase
-
-      messages("countries")
-      MartialArts::Countries.country_list.each.with_index(1) {|country, i| puts "#{i}. #{country}"}
-      messages("user")
 
       case input
       when /\d\d*/  #checks if input is a number
@@ -138,6 +140,7 @@ class MartialArts::CLI
         if (1...size+1).include?(input.to_i)
 
           display_info_for(@style_list[input.to_i-1])
+          messages("list or back")
         else
           messages("invalid")
         end
@@ -157,8 +160,8 @@ class MartialArts::CLI
 
   def styles_by_country_list(input)
     @country_input = input
-    country = MartialArts::Countries.country_list[input.to_i-1]
-    @style_list = MartialArts::Styles.search_by_country(country)
+    @country = MartialArts::Countries.country_list[input.to_i-1]
+    @style_list = MartialArts::Styles.search_by_country(@country)
 
     messages("styles by country")
     @style_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}"}
@@ -170,12 +173,12 @@ class MartialArts::CLI
     size = MartialArts::Styles.all.size
     input = nil
 
+    messages("all styles")
+    MartialArts::Styles.styles_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}" }
+    messages("user")
+
     while input != "back"
       input = gets.strip.downcase
-
-      messages("all styles")
-      MartialArts::Styles.styles_list.each.with_index(1) {|style_instance, i| puts "#{i}. #{style_instance.name}" }
-      messages("user")
 
       case input
       when /\d\d*/ #Checks if input is a number
@@ -184,7 +187,7 @@ class MartialArts::CLI
           style = MartialArts::Styles.styles_list[input.to_i-1]
 
           display_info_for(style)
-          messages("user")
+          messages("list or back")
         else
           messages("invalid")
         end
@@ -206,15 +209,13 @@ class MartialArts::CLI
 
   def fighting_focus_submenu
     @focus_list = {1 => "Striking", 2 => "Grappling", 3 => "Weaponry", 4 => "Hybrid", 5 => "Internal"}
-
     input = nil
 
+    messages("fighting focus menu")
+    @focus_list.each {|i, focus| puts "#{i}. #{focus}" }
+    messages("user")
+
     while input != "back"
-
-      messages("fighting focus menu")
-      @focus_list.each {|i, focus| puts "#{i}. #{focus}" }
-      messages("user")
-
       input = gets.strip.downcase
 
       case input
@@ -247,6 +248,7 @@ class MartialArts::CLI
 
         if (1...size+1).include?(input.to_i)
           display_info_for(@focus_style_list[input.to_i-1])
+          messages("list or back")
         else
           messages("invalid")
         end
@@ -254,6 +256,9 @@ class MartialArts::CLI
       when "list"
         styles_by_focus_list(@focus_input)
       when "back"
+        messages("fighting focus menu")
+        @focus_list.each {|i, focus| puts "#{i}. #{focus}" }
+        messages("user")
         break
       else
         messages("invalid")
@@ -312,7 +317,7 @@ class MartialArts::CLI
     when "styles by country"
 
       puts ""
-      puts "                              #{"MARTIAL ARTS FROM".magenta} #{country.upcase.cyan}"
+      puts "                              #{"MARTIAL ARTS FROM".magenta} #{@country.upcase.cyan}"
       puts ""
 
     when "countries"
@@ -323,9 +328,13 @@ class MartialArts::CLI
 
     when "popular"
 
-      puts " "
+      puts ""
       puts "                              POPULAR MARTIAL ARTS".magenta#15 tabs for title
-      puts " "
+      puts ""
+
+    when "list or back"
+
+      puts "#{"Type".cyan} list #{"or".cyan} back"
 
     else
     end
@@ -343,8 +352,6 @@ class MartialArts::CLI
     puts " "
     puts "More Info: #{style.website.magenta}"
     puts " "
-
-    puts "#{"Type".cyan} list, #{"or".cyan} back"
 
   end
 
