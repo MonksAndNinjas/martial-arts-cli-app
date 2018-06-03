@@ -2,7 +2,7 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/martial_arts`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: This Ruby Gem provides a CLI to view the world's most popular martial arts taken from a Google search and Wikipedia.
+TODO: This Ruby Gem provides a CLI to view the world's most popular martial arts taken from a www.singpatong-sitnumnoi.com; Users can also learn more information about the style such as (wiki-website, description, name, country, fighting-focus). styles, can be searched by country, or fighting-focus. I have also added code to collect incomplete data from the scrape if one has the desire to add code to retrieve it. Enjoy!
 
 ## Installation
 
@@ -22,7 +22,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Type the below and follow the on screen prompts.
+
+TODO: $ ./bin/martial-arts-console
 
 ## Development
 
