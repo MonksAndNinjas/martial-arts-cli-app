@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["'Joseph Jimenez'"]
   spec.email         = ["'blackbeltdiaries@gmail.com'"]
 
-  spec.summary       = %q{TODO: provides info for a martial art's style.}
+  spec.summary       = "TODO: provides info for a martial art's style."
   spec.homepage      = "https://github.com/MonksAndNinjas/martial-arts-cli-app.git"
   spec.license       = "MIT"
 
