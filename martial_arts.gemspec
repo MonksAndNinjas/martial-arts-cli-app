@@ -6,8 +6,8 @@ require "martial_arts/version"
 Gem::Specification.new do |spec|
   spec.name          = "martial_arts"
   spec.version       = MartialArts::VERSION
-  spec.authors       = ["'Joseph Jimenez'"]
-  spec.email         = ["'blackbeltdiaries@gmail.com'"]
+  spec.authors       = ["Joseph Jimenez"]
+  spec.email         = ["blackbeltdiaries@gmail.com"]
 
   spec.summary       = "provides info for a martial art's style."
   spec.homepage      = "https://github.com/MonksAndNinjas/martial-arts-cli-app.git"
@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "'http://mygemserver.com'"
+    spec.metadata["allowed_push_host"] = "http://mygemserver.com"
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
